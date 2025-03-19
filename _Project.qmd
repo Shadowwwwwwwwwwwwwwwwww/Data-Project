@@ -1,0 +1,71 @@
+---
+title: "But A Mere, Simple Quarto File"
+authors: Blake, Leo, Ari, August Gonzales, Harry Le
+format:
+    html:
+        embed-resources: true
+editor: visual
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+```
+
+## Abstract
+
+(Found as "Executive Summary" in the criteria)
+
+Max 50 words: Clear, interesting summary of the main insights/findings from the report.\
+
+1.  The ES is a quick, snappy summary for a busy manager. The rest of the report is the supporting evidence.
+2.  You can choose what format to use (eg a paragraph or bullet points). However, it must all be cohesive and clear.
+
+## Research Question (Abstract)
+
+Explores a research question, using numerical and/or graphical summaries (i.e., ggplot, gganimation, maps) which give insight.\
+
+You have freedom to approach this task however you'd like to. You will be marked on whether you 'skillfully dealt with the research data.'\
+
+Overall: 1. The total word count is 350 words. 2. Coding and R output is not included in the word count.
+
+## Initial Data Analysis
+
+Max 200 words: Discusses source, structure and limitations of data collection. Defines meaning of key variables. Describes any assumptions, and any data cleaning.
+
+1.  Source' means where the data came from.
+2.  'Structure' means the overall size of the dataset, and the type of variables, including any reclassification needed in R. You can focus on just the variables needed for your research questions.
+3.  'Limitations' means the issues which may affect confidence in and interpretation of the data.
+4.  'Assumptions' is any ideas about the data for which we don't yet have evidence. For example, you collect 100 students shoe sizes, 90 students shoe size range between 6-12 but 10 are outliers at 30 - 45. You may make the assumption that they have incorrectly entered european sizes.
+5.  'Data cleaning' is changing the data from its original format. You do not need to list every change (eg change of classification can be noted in the code chunk), rather discuss the overall nature of changes with reasons.
+
+## Professional Standard of Report
+
+1\. The report is well edited with a high standard of spelling and grammar.
+2. The word counts are respected, and there is no extraneous output.
+3. The research is interesting, and carefully and thoughtfully implemented.
+4. There is a short statement explaining how 1 of the Shared Values and 1
+of the Ethical Principles has been adhered to (see ISI: <https://isi-web.org/declaration-professional-ethics>)
+
+------------------------------------------------------------------------
+
+## References & Acknowledgements
+
+Max 50 words: Carefully relates findings to 2 articles (can be research or media etc). Articles are listed in the References at the end, using APA.\
+
+1.  See APA information here: <https://libguides.library.usyd.edu.au/citation/apa7>
+2.  The references are not included in the word count.
+3.  The comments on articles can be put in a separate section, or weaved throughout the report, at appropriate places.
+
+The report ends with an 'Acknowledgments' section. The Acknowledgment section includes:\
+
+-   a list of group meetings (date and time and attendance) - the contribution of each group member
+
+{{< include "Meetings and Contributions.qmd" >}}
+
+-   all resources used (eg url of stack overflow, url of Ed post, date and details of drop-in session with tutor)
+
+{{< include "Acknowledgements and Resources.qmd" >}}
+
+-   an AI usage statement explaining how AI was used, the name and version of AI tools used, the date/s of use of the AI tools and a link to the entire prompt session used to inform the report. If no AI was used, this must be made explicit.

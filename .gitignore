@@ -1,0 +1,10 @@
+# R file excludes
+
+*.Rproj
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Export excludes
+*.html
