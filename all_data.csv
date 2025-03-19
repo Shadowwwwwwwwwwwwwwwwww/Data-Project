@@ -1,0 +1,83 @@
+Variable,Description
+Date,Date of Participation
+PID,"Participant ID Number: First Digit 1(Choice), 2(No Choice) Second Digit 1 (SM C), 2 (SM I), 3 (No SM)"
+BSSQ_1,Baseline SSQ Item: General Discomfort
+BSSQ_2,Baseline SSQ Item: Fatigue
+BSSQ_3,Baseline SSQ Item: Headache
+BSSQ_4,Baseline SSQ Item: Eyestrain
+BSSQ_5,Baseline SSQ Item: Difficulty Focusing
+BSSQ_6,Baseline SSQ Item: Salivation Increasing
+BSSQ_7,Baseline SSQ Item: Sweating
+BSSQ_8,Baseline SSQ Item: Nausea
+BSSQ_9,Baseline SSQ Item: Difficulty Concentrating
+BSSQ_10,Baseline SSQ Item: Fullness of Head
+BSSQ_11,Baseline SSQ Item: Blurred Vision
+BSSQ_12,Baseline SSQ Item: Dizziness (eyes open)
+BSSQ_13,Baseline SSQ Item: Dizziness (eyes closed)
+BSSQ_14,Baseline SSQ Item: Vertigo
+BSSQ_15,Baseline SSQ Item: Stomach Awareness
+BSSQ_16,Baseline SSQ Item: Vertigo
+BSTAI_1,Baseline STAI Item: Calm
+BSTAI_2,Baseline STAI Item: Tense
+BSTAI_3,Baseline STAI Item: Upset
+BSTAI_4,Baseline STAI Item: Relaxed
+BSTAI_5,Baseline STAI Item: Content
+BSTAI_6,Baseline STAI Item: Worried
+BE,Baseline Expectancy Rating
+BVRA,Baseline VR Anxiety Rating
+choice_env,Choice of VR Environment (for those in Choice condition)
+no_choice_env,Assigned VR Environment (for those in No Choice condition)
+PSTAI_1,Active STAI Item: Calm
+PSTAI_2,Active STAI Item: Tense
+PSTAI_3,Active STAI Item: Upset
+PSTAI_4,Active STAI Item: Relaxed
+PSTAI_5,Active STAI Item: Content
+PSTAI_6,Active STAI Item: Worried
+PE,Active Expectancy Rating
+PVRA,Active VR Anxiety Rating
+ASSQ_1,Active SSQ Item: General Discomfort
+ASSQ_2,Active SSQ Item: Fatigue
+ASSQ_3,Active SSQ Item: Headache
+ASSQ_4,Active SSQ Item: Eyestrain
+ASSQ_5,Active SSQ Item: Difficulty Focusing
+ASSQ_6,Active SSQ Item: Salivation Increasing
+ASSQ_7,Active SSQ Item: Sweating
+ASSQ_8,Active SSQ Item: Nausea
+ASSQ_9,Active SSQ Item: Difficulty Concentrating
+ASSQ_10,Active SSQ Item: Fullness of Head
+ASSQ_11,Active SSQ Item: Blurred Vision
+ASSQ_12,Active SSQ Item: Dizziness (eyes open)
+ASSQ_13,Active SSQ Item: Dizziness (eyes closed)
+ASSQ_14,Active SSQ Item: Vertigo
+ASSQ_15,Active SSQ Item: Stomach Awareness
+ASSQ_16,Active SSQ Item: Vertigo
+baseline_ssq_full,Full Sum-Scored Baseline SSQ
+baseline_ssq_modelled,Sum-Scored Baseline SSQ (modelled symptoms)
+baseline_e,Baseline Expectancy Rating
+baseline_stai,Baseline STAI-6 Score
+baseline_vra,Baseline VR Anxiety Rating
+p_stai,Active Expectancy Rating
+p_e,Active STAI-6 Score
+p_vra,Active VR Anxiety Rating
+active_ssq_full,Full Sum-Scored Active SSQ
+active_ssq_modelled,Sum-Scored Active SSQ (modelled symptoms)
+age,Age of Participant (years)
+gender,Gender of Participant (male/female/other)
+VRexperience,VR Experience of Participant (yes/no)
+control,Perceived Control of Participant (z-scored within E1/2 and E3 to account for the change in rating scale)
+happy,SAM: Dimension Valence
+excited,SAM: Dimension Arousal
+ssq_full,Full Sum-Scored Active SSQ minus Full Sum-Scored Baseline SSQ
+ssq_modelled,Sum-Scored Active SSQ (modelled symptoms) minus Sum-Scored Baseline SSQ (modelled symptoms)
+stai,Baseline Adjusted STAI-6 Score
+expect,Baseline Adjusted Expectancy Score
+vranxiety,Baseline Adjusted VR Anxiety Score
+sm,Social Modelling Condition
+choice,Choice Condition
+env,VR Environment Experienced (snowy/sunny)
+cont1,Contrast 1 (numeric)
+cont2,Contrast 2 (numeric)
+cont_1,Contrast 1 (categorical)
+cont_2,Contrast 2 (categorical)
+group,Social Modelling and Choice Condition of Participant 
+study,"Experiment (1, 2, or 3) of Participation"
