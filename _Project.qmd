@@ -35,18 +35,32 @@ Overall: 1. The total word count is 350 words. 2. Coding and R output is not inc
 Max 200 words: Discusses source, structure and limitations of data collection. Defines meaning of key variables. Describes any assumptions, and any data cleaning.
 
 1.  Source' means where the data came from.
+
 2.  'Structure' means the overall size of the dataset, and the type of variables, including any reclassification needed in R. You can focus on just the variables needed for your research questions.
+
 3.  'Limitations' means the issues which may affect confidence in and interpretation of the data.
+
 4.  'Assumptions' is any ideas about the data for which we don't yet have evidence. For example, you collect 100 students shoe sizes, 90 students shoe size range between 6-12 but 10 are outliers at 30 - 45. You may make the assumption that they have incorrectly entered european sizes.
+
 5.  'Data cleaning' is changing the data from its original format. You do not need to list every change (eg change of classification can be noted in the code chunk), rather discuss the overall nature of changes with reasons.
+
+    **Overview**
+
+    The data was sourced through an experimental testing. (WHERE IT COMES FROM)
+
+    Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants anxiety reported levels. With these three variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize the ages as groups for which the anxiety changed, while the rest remained as they were. These being the VR environment as a qualitative nominal, and the anxiety level's which is a quantitative discrete variable.
+
+    **Limitations**
+
+    Within the data not a full population could be used, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, it is not possible to control people's moods and behaviors before entering the VR simulation, as such the data could vary depending on the sets of groups used.
+
+    **Assumption**
+
+    There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. (ADD ANYTHING ABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
 
 ## Professional Standard of Report
 
-1\. The report is well edited with a high standard of spelling and grammar.
-2. The word counts are respected, and there is no extraneous output.
-3. The research is interesting, and carefully and thoughtfully implemented.
-4. There is a short statement explaining how 1 of the Shared Values and 1
-of the Ethical Principles has been adhered to (see ISI: <https://isi-web.org/declaration-professional-ethics>)
+1\. The report is well edited with a high standard of spelling and grammar. 2. The word counts are respected, and there is no extraneous output. 3. The research is interesting, and carefully and thoughtfully implemented. 4. There is a short statement explaining how 1 of the Shared Values and 1 of the Ethical Principles has been adhered to (see ISI: <https://isi-web.org/declaration-professional-ethics>)
 
 ------------------------------------------------------------------------
 
