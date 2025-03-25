@@ -30,6 +30,8 @@ You have freedom to approach this task however you'd like to. You will be marked
 
 Overall: 1. The total word count is 350 words. 2. Coding and R output is not included in the word count.
 
+Q\) Does the volition on the type of VR environment impact the severity of anxiety level deviation
+
 ## Initial Data Analysis
 
 Max 200 words: Discusses source, structure and limitations of data collection. Defines meaning of key variables. Describes any assumptions, and any data cleaning.
