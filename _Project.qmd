@@ -13,24 +13,16 @@ library(ggplot2)
 library(plotly)
 ```
 
-## Abstract
+## Executive Summary
 
 (Found as "Executive Summary" in the criteria)
 
-Max 50 words: Clear, interesting summary of the main insights/findings from the report.\
+Max 50 words: Clear, interesting summary of the main insights/findings from the report.
 
 1.  The ES is a quick, snappy summary for a busy manager. The rest of the report is the supporting evidence.
 2.  You can choose what format to use (eg a paragraph or bullet points). However, it must all be cohesive and clear.
 
-## Research Question (Abstract)
-
-Explores a research question, using numerical and/or graphical summaries (i.e., ggplot, gganimation, maps) which give insight.\
-
-You have freedom to approach this task however you'd like to. You will be marked on whether you 'skillfully dealt with the research data.'\
-
-Overall: 1. The total word count is 350 words. 2. Coding and R output is not included in the word count.
-
-Q\) Does the volition on the type of VR environment impact the severity of anxiety level deviation
+Our analysis within this report found that...
 
 ## Initial Data Analysis
 
@@ -59,6 +51,20 @@ Max 200 words: Discusses source, structure and limitations of data collection. D
     **Assumption**
 
     There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. (ADD ANYTHING ABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
+
+## Research Question (Abstract)
+
+Explores a research question, using numerical and/or graphical summaries (i.e., ggplot, gganimation, maps) which give insight.
+
+You have freedom to approach this task however you'd like to. You will be marked on whether you 'skillfully dealt with the research data.'
+
+Overall: 1. The total word count is 350 words. 2. Coding and R output is not included in the word count.
+
+Q\) Does the volition on the type of VR environment impact the severity of anxiety level deviation
+
+The data conveyed that..... (Talk about box plots, and other graphs)
+
+Our findings conclude that there may be an influence on anxiety...
 
 ## Professional Standard of Report
 
