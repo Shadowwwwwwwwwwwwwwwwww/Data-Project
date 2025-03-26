@@ -64,6 +64,8 @@ p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
 ggplotly(p)
 ```
 
+This graph shows that when given a choice, the max and mins become a lot closer to the quatiles, hence less outliers in the data. Although it is notable that the median change of anxiety does not change that much so they still experience similar amounts of change. NOTE: LOOK AT HTML FOR FULL VIEW
+
 ```{r, fig.height=40, fig.width=20}
 all_data <- all_data %>%
   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
