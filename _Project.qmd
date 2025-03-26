@@ -64,7 +64,7 @@ p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
 ggplotly(p)
 ```
 
-```{r, fig.height=12, fig.width=8, out.height="800px"}
+```{r, fig.height=40, fig.width=20}
 all_data <- all_data %>%
   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
          age_group = cut(age, 
@@ -84,13 +84,13 @@ all_data_clean <- all_data %>%
 p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
   geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
   facet_wrap(~ choice + age_group, ncol = 1) +  # Facet by choice condition and age group
-  labs(title = "Change in Anxiety Levels by System Environment, Age Group, and Choice Condition",
+  labs(title = "Change in Anxiety Levels by System Environment",
        x = "System Environment",
        y = "Change in Anxiety Level",
        fill = "Environment") +
   theme_minimal() +
-  scale_y_continuous(limits = c(-5, 10), 
-                     breaks = seq(-4, 10, by = 4)) +  # Y-axis ticks every 2 units
+  scale_y_continuous(limits = c(-10, 10), 
+                     breaks = seq(-5, 10, by = 5)) +  # Y-axis ticks every 2 units
   theme(strip.text = element_text(size = 10),  # Adjust facet label size
         strip.background = element_blank(),  # Remove background color from facet labels
         panel.spacing = unit(2, "lines"),  # Increase spacing between panels
