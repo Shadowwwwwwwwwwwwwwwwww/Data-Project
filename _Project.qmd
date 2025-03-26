@@ -1,16 +1,24 @@
 ---
 title: "But A Mere, Simple Quarto File"
-authors: Blake, Leo, Ari, August Gonzales, Harry Le
+authors: Blake Walker, Leo, Ari, August Gonzales, Harry Le
 format:
     html:
         embed-resources: true
 editor: visual
 ---
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, include = FALSE}
 library(tidyverse)
 library(ggplot2)
 library(plotly)
+library(readxl)
+library(dplyr)
+
+file_path <- "all_data.xlsx"
+all_data <- read_excel("all_data.xlsx", sheet = "pooled123")
+
 ```
 
 ## Executive Summary
@@ -25,6 +33,76 @@ Max 50 words: Clear, interesting summary of the main insights/findings from the 
 Our analysis within this report found that...
 
 ## Initial Data Analysis
+
+I think this is correct for the graph, for the change in anxiety I dunno. It also shows that a sunny environment may have not as large of an affect in anxiety compared to snowy, Although notable the Simpsons affect might take affect here as the min and max for sunny is normally higher which means that their increase or decrease in anxiety might make it seem like theres not as big of an affect. (Median is always equal to or less than) ALSO NOTE: This may not be the best way, as we only know the change E.g Final - Intial, ALSO THIS IS CHANGE, LOWER ONLY MEANS A LOWER CHANGE NOT REDUCED ANXIETY.
+
+```{r}
+all_data <- all_data %>%
+  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
+         age_group = cut(age, 
+                          breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 100), 
+                          labels = c("0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-100"),
+                          right = FALSE))  # Create the age groups
+
+# Filter out outliers for change in anxiety (below 0 or above 5)
+all_data_clean <- all_data %>%
+  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
+
+# Create the boxplot with the desired y-axis scale using the change in anxiety
+p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
+  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
+  facet_wrap(~ age_group) +  # Separate by age groups
+  labs(title = "Change in Anxiety Levels by System Environment and Age Group",
+       x = "System Environment",
+       y = "Change in Anxiety Level",
+       fill = "Environment") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(-5, 10), 
+                     breaks = seq(-4, 10, by = 2))  # Y-axis ticks every 2 units
+
+# Convert the plot to an interactive plot
+ggplotly(p)
+```
+
+```{r, fig.height=12, fig.width=8, out.height="800px"}
+all_data <- all_data %>%
+  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
+         age_group = cut(age, 
+                          breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 100), 
+                          labels = c("0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "80-100"),
+                          right = FALSE))  # Create the age groups
+
+# Filter out outliers for change in anxiety (below 0 or above 5)
+all_data_clean <- all_data %>%
+  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
+
+
+# Now, create the faceted boxplot with the two sections:
+# One for participants who chose their environment, 
+# and one for participants who did not choose their environment
+
+p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
+  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
+  facet_wrap(~ choice + age_group, ncol = 1) +  # Facet by choice condition and age group
+  labs(title = "Change in Anxiety Levels by System Environment, Age Group, and Choice Condition",
+       x = "System Environment",
+       y = "Change in Anxiety Level",
+       fill = "Environment") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(-5, 10), 
+                     breaks = seq(-4, 10, by = 4)) +  # Y-axis ticks every 2 units
+  theme(strip.text = element_text(size = 10),  # Adjust facet label size
+        strip.background = element_blank(),  # Remove background color from facet labels
+        panel.spacing = unit(2, "lines"),  # Increase spacing between panels
+        axis.text.y = element_text(size = 12, angle = 0, hjust = 1),  # Increase size and adjust angle of y-axis labels
+        axis.title.y = element_text(size = 14),  # Increase the size of y-axis title
+        axis.text.x = element_text(size = 10))  # Adjust x-axis label size
+
+# Convert the plot to an interactive plot and increase vertical size with margin adjustments
+ggplotly(p) %>%
+  layout(height = 1000,  # Adjust the height further
+         margin = list(l = 100, r = 100, t = 100, b = 100)) 
+```
 
 Max 200 words: Discusses source, structure and limitations of data collection. Defines meaning of key variables. Describes any assumptions, and any data cleaning.
 
@@ -50,7 +128,7 @@ Max 200 words: Discusses source, structure and limitations of data collection. D
 
     **Assumption**
 
-    There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. (ADD ANYTHING ABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
+    There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. Furthermore, data cleaning had to take place to remove outliers, these were anxiety levels that were less than zero or more than 5, as the levels only ranged in between these as such it was assumed to be a mistake if it was outside this range. (ADD ANYTHING ELSEABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
 
 ## Research Question (Abstract)
 
