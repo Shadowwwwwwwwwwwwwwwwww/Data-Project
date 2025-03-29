@@ -1,5 +1,5 @@
 ---
-title: "But A Mere, Simple Quarto File"
+title: "Data 1901 assignment"
 authors: Blake Walker, Leo, Ari, August Gonzales, Harry Le
 format:
     html:
@@ -7,7 +7,7 @@ format:
 editor: visual
 ---
 
-STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT
+STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT(OMIT ANY DATA, TURN AGE INTO QUALATATIVE, AND USE A THEME)
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE, include = FALSE}
 library(tidyverse)
@@ -29,21 +29,9 @@ Our analysis within this report found that typically there was a higher median i
 
 Max 200 words: Discusses source, structure and limitations of data collection. Defines meaning of key variables. Describes any assumptions, and any data cleaning.
 
-1.  Source' means where the data came from.
-
-2.  'Structure' means the overall size of the dataset, and the type of variables, including any reclassification needed in R. You can focus on just the variables needed for your research questions.
-
-3.  'Limitations' means the issues which may affect confidence in and interpretation of the data.
-
-4.  'Assumptions' is any ideas about the data for which we don't yet have evidence. For example, you collect 100 students shoe sizes, 90 students shoe size range between 6-12 but 10 are outliers at 30 - 45. You may make the assumption that they have incorrectly entered european sizes.
-
-5.  'Data cleaning' is changing the data from its original format. You do not need to list every change (eg change of classification can be noted in the code chunk), rather discuss the overall nature of changes with reasons.
-
 **Overview**
 
-The data was sourced through an experimental testing. (WHERE IT COMES FROM)
-
-Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants anxiety reported levels. With these three variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize the ages as groups for which the anxiety changed, while the rest remained as they were. These being the VR environment as a qualitative nominal, and the anxiety level's which is a quantitative discrete variable.
+The data was sourced through an experimental survey examining the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants anxiety reported levels. With these three variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize groups for which the anxiety changed, while the rest remained as they were. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable.
 
 ```{r}
 # I think this is correct for the graph, for the change in anxiety I dunno. It also shows that a sunny environment may have not as large of an affect in anxiety compared to snowy, Although notable the Simpsons affect might take affect here as the min and max for sunny is normally higher which means that their increase or decrease in anxiety might make it seem like theres not as big of an affect. (Median is always equal to or less than) ALSO NOTE: This may not be the best way, as we only know the change E.g Final - Intial, ALSO THIS IS CHANGE, LOWER ONLY MEANS A LOWER CHANGE NOT REDUCED ANXIETY.
@@ -117,15 +105,13 @@ ggplotly(p) %>%
          margin = list(l = 100, r = 100, t = 100, b = 100)) 
 ```
 
--   
+**Limitations**
 
--   **Limitations**
+This study is limited by its sample size, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, external factors like mood and behaviors before entering the VR simulation will not be able to be controlled, as such the data could vary depending on the sets of age groups.
 
-    Within the data not a full population could be used, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, it is not possible to control people's moods and behaviors before entering the VR simulation, as such the data could vary depending on the sets of groups used.
+**Assumption**
 
-    **Assumption**
-
-    There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. Furthermore, data cleaning had to take place to remove outliers, these were anxiety levels that were less than zero or more than 5, as the levels only ranged in between these as such it was assumed to be a mistake if it was outside this range. (ADD ANYTHING ELSEABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
+There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. Furthermore, data cleaning had to take place to remove outliers, these were anxiety levels that were less than zero or more than 5, as the levels only ranged in between these as such it was assumed to be a mistake if it was outside this range. Furthermore, only age groups between 15 and 40 were used as these groups had the most data, and reassembled the real world most accurately.
 
 ## Research Question
 
@@ -147,7 +133,7 @@ Overall, we came to a consensus that our findings reflect that the volition migh
 
 ## Professional Standard of Report
 
-1\. The report is well edited with a high standard of spelling and grammar. 2. The word counts are respected, and there is no extraneous output. 3. The research is interesting, and carefully and thoughtfully implemented. 4. There is a short statement explaining how 1 of the Shared Values and 1 of the Ethical Principles has been adhered to (see ISI: <https://isi-web.org/declaration-professional-ethics>)
+The report is well edited with a high standard of spelling and grammar. 2. The word counts are respected, and there is no extraneous output. 3. The research is interesting, and carefully and thoughtfully implemented. 4. There is a short statement explaining how 1 of the Shared Values and 1 of the Ethical Principles has been adhered to (see ISI: <https://isi-web.org/declaration-professional-ethics>)
 
 ------------------------------------------------------------------------
 
