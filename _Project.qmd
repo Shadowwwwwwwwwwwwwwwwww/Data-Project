@@ -7,7 +7,7 @@ format:
 editor: visual
 ---
 
-STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT(OMIT ANY DATA, TURN AGE INTO QUALATATIVE, AND USE A THEME)
+STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT(OMIT ANY DATA, TURN AGE INTO QUALATATIVE, AND USE A THEME) Also might wanna use Levenes test to show only weak correlations
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE, include = FALSE}
 library(tidyverse)
@@ -21,6 +21,8 @@ all_data <- read_excel("all_data.xlsx", sheet = "pooled123")
 library(car)
 all_data$anxiety_change <- all_data$p_vra - all_data$baseline_vra
 leveneTest(anxiety_change ~ choice, data = all_data)
+
+
 ```
 
 ## Executive Summary
