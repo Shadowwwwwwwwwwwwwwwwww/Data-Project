@@ -1,5 +1,7 @@
 ## Acknowledgements
 
+- GitHub was utilized for easy project management
+
 ### Resources
 
 -   https://quarto.org/docs/authoring/includes.html
