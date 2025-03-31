@@ -33,10 +33,75 @@ Our analysis within this report found that typically no anxiety change relations
 
 The data was sourced through an experimental survey examining 337 partiicipants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
 
-```{r} # I think this is correct for the graph, for the change in anxiety I dunno. It also shows that a sunny environment may have not as large of an affect in anxiety compared to snowy, Although notable the Simpsons affect might take affect here as the min and max for sunny is normally higher which means that their increase or decrease in anxiety might make it seem like theres not as big of an affect. (Median is always equal to or less than) ALSO NOTE: This may not be the best way, as we only know the change E.g Final - Intial, ALSO THIS IS CHANGE, LOWER ONLY MEANS A LOWER CHANGE NOT REDUCED ANXIETY.  all_data <- all_data %>%   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety          age_group = cut(age,                            breaks = c(15, 20, 25, 30, 35, 40),                            labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),                           right = FALSE))  # Create the age groups  # Filter out outliers for change in anxiety (below 0 or above 5) all_data_clean <- all_data %>%   filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5  # Create the boxplot with the desired y-axis scale using the change in anxiety p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +   geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot   facet_wrap(~ age_group) +  # Separate by age groups   labs(title = "Change in Anxiety Levels by System Environment and Age Group",        x = "System Environment",        y = "Change in Anxiety Level",        fill = "Environment") +   theme_minimal() +   scale_y_continuous(limits = c(-5, 10),                       breaks = seq(-4, 10, by = 2))  # Y-axis ticks every 2 units  # Convert the plot to an interactive plot ggplotly(p)}
+```{r} # I think this is correct for the graph, for the change in anxiety I dunno. It also shows that a sunny environment may have not as large of an affect in anxiety compared to snowy, Although notable the Simpsons affect might take affect here as the min and max for sunny is normally higher which means that their increase or decrease in anxiety might make it seem like theres not as big of an affect. (Median is always equal to or less than) ALSO NOTE: This may not be the best way, as we only know the change E.g Final - Intial, ALSO THIS IS CHANGE, LOWER ONLY MEANS A LOWER CHANGE NOT REDUCED ANXIETY.}
+
+all_data <- all_data %>%
+  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
+         age_group = cut(age, 
+                          breaks = c(15, 20, 25, 30, 35, 40), 
+                          labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),
+                          right = FALSE))  # Create the age groups
+
+# Filter out outliers for change in anxiety (below 0 or above 5)
+all_data_clean <- all_data %>%
+  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
+
+# Create the boxplot with the desired y-axis scale using the change in anxiety
+p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
+  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
+  facet_wrap(~ age_group) +  # Separate by age groups
+  labs(title = "Change in Anxiety Levels by System Environment and Age Group",
+       x = "System Environment",
+       y = "Change in Anxiety Level",
+       fill = "Environment") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(-5, 10), 
+                     breaks = seq(-4, 10, by = 2))  # Y-axis ticks every 2 units
+
+# Convert the plot to an interactive plot
+ggplotly(p)
 ```
 
-```{r, fig.height=30, fig.width=20} # This graph shows that when given a choice, the max and mins become a lot closer to the quatiles, hence less outliers in the data. Although it is notable that the median change of anxiety does not change that much so they still experience similar amounts of change. NOTE: LOOK AT HTML FOR FULL VIEW  all_data <- all_data %>%   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety          age_group = cut(age,                            breaks = c(15, 20, 25, 30, 35, 40),                            labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),                           right = FALSE))  # Create the age groups  # Filter out outliers for change in anxiety (below 0 or above 5) all_data_clean <- all_data %>%   filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5   # Now, create the faceted boxplot with the two sections: # One for participants who chose their environment,  # and one for participants who did not choose their environment  p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +   geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot   facet_wrap(~ choice + age_group, ncol = 1) +  # Facet by choice condition and age group   labs(title = "Change in Anxiety Levels by System Environment",        x = "System Environment",        y = "Change in Anxiety Level",        fill = "Environment") +   theme_minimal() +   scale_y_continuous(limits = c(-10, 10),                       breaks = seq(-5, 10, by = 5)) +  # Y-axis ticks every 2 units   theme(strip.text = element_text(size = 10),  # Adjust facet label size         strip.background = element_blank(),  # Remove background color from facet labels         panel.spacing = unit(2, "lines"),  # Increase spacing between panels         axis.text.y = element_text(size = 12, angle = 0, hjust = 1),  # Increase size and adjust angle of y-axis labels         axis.title.y = element_text(size = 14),  # Increase the size of y-axis title         axis.text.x = element_text(size = 10))  # Adjust x-axis label size  # Convert the plot to an interactive plot and increase vertical size with margin adjustments ggplotly(p) %>%   layout(height = 1000,  # Adjust the height further          margin = list(l = 100, r = 100, t = 100, b = 100))}
+```{r, fig.height=30, fig.width=20}
+# This graph shows that when given a choice, the max and mins become a lot closer to the quatiles, hence less outliers in the data. Although it is notable that the median change of anxiety does not change that much so they still experience similar amounts of change. NOTE: LOOK AT HTML FOR FULL VIEW
+
+all_data <- all_data %>%
+  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
+         age_group = cut(age, 
+                          breaks = c(15, 20, 25, 30, 35, 40), 
+                          labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),
+                          right = FALSE))  # Create the age groups
+
+# Filter out outliers for change in anxiety (below 0 or above 5)
+all_data_clean <- all_data %>%
+  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
+
+
+# Now, create the faceted boxplot with the two sections:
+# One for participants who chose their environment, 
+# and one for participants who did not choose their environment
+
+p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
+  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
+  facet_wrap(~ choice + age_group, ncol = 1) +  # Facet by choice condition and age group
+  labs(title = "Change in Anxiety Levels by System Environment",
+       x = "System Environment",
+       y = "Change in Anxiety Level",
+       fill = "Environment") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(-10, 10), 
+                     breaks = seq(-5, 10, by = 5)) +  # Y-axis ticks every 2 units
+  theme(strip.text = element_text(size = 10),  # Adjust facet label size
+        strip.background = element_blank(),  # Remove background color from facet labels
+        panel.spacing = unit(2, "lines"),  # Increase spacing between panels
+        axis.text.y = element_text(size = 12, angle = 0, hjust = 1),  # Increase size and adjust angle of y-axis labels
+        axis.title.y = element_text(size = 14),  # Increase the size of y-axis title
+        axis.text.x = element_text(size = 10))  # Adjust x-axis label size
+
+# Convert the plot to an interactive plot and increase vertical size with margin adjustments
+ggplotly(p) %>%
+  layout(height = 1000,  # Adjust the height further
+         margin = list(l = 100, r = 100, t = 100, b = 100)) 
 ```
 
 **Limitations**
