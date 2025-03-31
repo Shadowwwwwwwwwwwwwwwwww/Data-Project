@@ -33,8 +33,7 @@ Our analysis within this report found that typically no anxiety change relations
 
 The data was sourced through an experimental survey examining 337 partiicipants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
 
-```{r} # I think this is correct for the graph, for the change in anxiety I dunno. It also shows that a sunny environment may have not as large of an affect in anxiety compared to snowy, Although notable the Simpsons affect might take affect here as the min and max for sunny is normally higher which means that their increase or decrease in anxiety might make it seem like theres not as big of an affect. (Median is always equal to or less than) ALSO NOTE: This may not be the best way, as we only know the change E.g Final - Intial, ALSO THIS IS CHANGE, LOWER ONLY MEANS A LOWER CHANGE NOT REDUCED ANXIETY.}
-
+```{r}
 all_data <- all_data %>%
   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
          age_group = cut(age, 
@@ -63,7 +62,6 @@ ggplotly(p)
 ```
 
 ```{r, fig.height=30, fig.width=20}
-# This graph shows that when given a choice, the max and mins become a lot closer to the quatiles, hence less outliers in the data. Although it is notable that the median change of anxiety does not change that much so they still experience similar amounts of change. NOTE: LOOK AT HTML FOR FULL VIEW
 
 all_data <- all_data %>%
   mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
