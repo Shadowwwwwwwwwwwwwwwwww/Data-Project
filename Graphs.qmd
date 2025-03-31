@@ -1,0 +1,37 @@
+---
+title: "Graphs"
+format:
+    html:
+        embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+data = read_xlsx("all_data.xlsx", sheet = "pooled123")
+
+data$choice_and_env = paste(data$choice, data$env)
+
+ggplot(data, aes(x = choice_and_env, y = vranxiety)) +
+    geom_boxplot()
+
+ggplot(data, aes(x = choice, y = vranxiety)) +
+    geom_boxplot()
+
+ggplot(data, aes(x = env, y = vranxiety)) +
+    geom_boxplot()
+
+anxiety_model = lm(active_ssq_full ~ baseline_ssq_full, data = data)
+
+ggplot(data, aes(x = baseline_ssq_full, y = active_ssq_full)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+
+ggplot(anxiety_model, aes(x = .fitted, .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0)
+
+ggplot(data, aes(x = ssq_full)) +
+    geom_boxplot()
+```
