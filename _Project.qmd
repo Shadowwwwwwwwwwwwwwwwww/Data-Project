@@ -25,13 +25,15 @@ leveneTest(anxiety_change ~ choice, data = all_data)
 
 ## Executive Summary
 
-Our analysis within this report found that typically no anxiety change relationship could be found between enviroments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
+Our analysis within this report found that typically no anxiety change relationship could be found between enviroments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur.
+
+#maybe more clear judgement/summary
 
 ## Initial Data Analysis
 
 **Overview**
 
-The data was sourced through an experimental survey examining 337 partiicipants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
+The data was sourced through an experimental survey examining 337 participants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilise groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
 
 ```{r}
 all_data <- all_data %>%
@@ -105,6 +107,8 @@ ggplotly(p) %>%
 **Limitations**
 
 This study is limited by its sample size, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, external factors like mood and behaviors before entering the VR simulation will not be able to be controlled, as such the data could vary depending on the sets of age groups.
+
+#maybe mention how mood will be accounted for
 
 **Assumption**
 
