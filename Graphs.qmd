@@ -34,7 +34,7 @@ agegroup = Vectorize(function(number) {
 })
 
 data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
-mutate(choice = recode(choice, CHOICE = "Chose ", NO_CHOICE = "No Choice, ")) |> 
+mutate(choice = recode(choice, CHOICE = "Choice, ", NO_CHOICE = "No Choice, ")) |> 
 mutate(ageset = agegroup(age)) |> 
 filter(ageset != "41+")
 data$choice_and_env = paste(data$choice, data$env)
@@ -50,13 +50,15 @@ data$choice_and_env = paste(data$choice, data$env)
     animate(renderer = gifski_renderer())
 
 
-data$choice_and_env = paste(data$choice, data$env)
+
 
 ggplot(data, aes(x = choice, y = vranxiety)) +
     geom_boxplot()
 
 ggplot(data, aes(x = env, y = vranxiety)) +
     geom_boxplot()
+
+
 
 anxiety_model = lm(active_ssq_full ~ baseline_ssq_full, data = data)
 
@@ -69,5 +71,20 @@ ggplot(anxiety_model, aes(x = .fitted, .resid)) +
     geom_hline(yintercept = 0)
 
 ggplot(data, aes(x = ssq_full)) +
+    geom_boxplot()
+
+
+
+vranxiety_model = lm(pvra ~ bvra, data = data)
+
+ggplot(data, aes(x = bvra, y = pvra)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+
+ggplot(anxiety_model, aes(x = .fitted, .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0)
+
+ggplot(data, aes(x = vranxiety)) +
     geom_boxplot()
 ```
