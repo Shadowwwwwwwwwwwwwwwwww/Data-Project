@@ -6,15 +6,51 @@ format:
 ---
 
 ```{r}
+install.packages("tidyverse")
 library(tidyverse)
+install.packages("readxl")
 library(readxl)
+install.packages("gganimate")
+library(gganimate)
+install.packages("gifski")
+library(gifski)
+install.packages("dplyr")
+library(dplyr)
 
-data = read_xlsx("all_data.xlsx", sheet = "pooled123")
+agegroup = Vectorize(function(number) {
+	if (number >= 17 & number <= 20) {
+		return ("17-20")
+	} else if (number >= 21 & number <= 25) {
+		return ("21-25")
+	} else if (number >= 26 & number <= 30) {
+		return ("26-30")
+	} else if (number >= 31 & number <= 35) {
+		return ("31-35")
+	} else if (number >= 36 & number <= 40) {
+		return ("36-40")
+	} else {
+		return ("41+")
+    }
+})
 
+data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
+mutate(choice = recode(choice, CHOICE = "Chose ", NO_CHOICE = "No Choice, ")) |> 
+mutate(ageset = agegroup(age)) |> 
+filter(ageset != "41+")
 data$choice_and_env = paste(data$choice, data$env)
 
-ggplot(data, aes(x = choice_and_env, y = vranxiety)) +
-    geom_boxplot()
+(ggplot(data, aes(x = choice_and_env, y = vranxiety)) + 
+    geom_boxplot() + 
+    labs(x = "Choice and Environment", y = "Change in Anxiety Level") + 
+    ggtitle("Change in Anxiety Level Against Choice and Environment from Ages {closest_state}") +
+    transition_states(ageset, state_length = 3, wrap = FALSE) + 
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out')) |>
+    animate(renderer = gifski_renderer())
+
+
+data$choice_and_env = paste(data$choice, data$env)
 
 ggplot(data, aes(x = choice, y = vranxiety)) +
     geom_boxplot()
