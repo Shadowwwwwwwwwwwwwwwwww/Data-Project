@@ -34,19 +34,21 @@ agegroup = Vectorize(function(number) {
 })
 
 data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
-mutate(choice = recode(choice, CHOICE = "Choice, ", NO_CHOICE = "No Choice, ")) |> 
-mutate(ageset = agegroup(age)) |> 
-filter(ageset != "41+")
-data$choice_and_env = paste(data$choice, data$env)
+    mutate(choice = recode(choice, CHOICE = "Choice", NO_CHOICE = "No Choice")) |> 
+    mutate(ageset = agegroup(age)) |> 
+    filter(ageset != "41+")
+data$choice_and_env = paste(data$choice, "-", data$env)
 
-(ggplot(data, aes(x = choice_and_env, y = vranxiety)) + 
+(ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
-    labs(x = "Choice and Environment", y = "Change in Anxiety Level") + 
+    labs(x = "Choice and Environment", y = "Change in Anxiety Level", color = "Choice", fill = "Environment") + 
     ggtitle("Change in Anxiety Level Against Choice and Environment from Ages {closest_state}") +
     transition_states(ageset, state_length = 3, wrap = FALSE) + 
     enter_fade() + 
     exit_shrink() + 
-    ease_aes('exponential-in-out')) |>
+    ease_aes('exponential-in-out') +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))) |>
     animate(renderer = gifski_renderer())
 
 
