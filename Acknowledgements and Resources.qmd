@@ -19,3 +19,7 @@
 -   https://pubmed.ncbi.nlm.nih.gov/36809117/#:~:text=As%20expected%2C%20negative%20audience%20elicited,the%20valence%20of%20previous%20experience.
 
 -   https://www.mdpi.com/2076-3417/10/14/4932
+
+- Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. *Applied Sciences*, *10*(4932), 4932. https://doi.org/10.3390/app10144932
+
+- Matteo Girondini, Milena Stefanova, Pillan, M., & Gallace, A. (2023). *The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study*. *26*(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
