@@ -8,6 +8,60 @@ format:
 ```{r}
 library(tidyverse)
 library(readxl)
+<<<<<<< HEAD
+=======
+library(gganimate)
+library(gifski)
+library(dplyr)
+
+# Define age groups
+agegroup = Vectorize(function(number) {
+	if (number >= 17 & number <= 20) {
+		return ("17-20")
+	} else if (number >= 21 & number <= 25) {
+		return ("21-25")
+	} else if (number >= 26 & number <= 30) {
+		return ("26-30")
+	} else if (number >= 31 & number <= 35) {
+		return ("31-35")
+	} else if (number >= 36 & number <= 40) {
+		return ("36-40")
+	} else {
+		return ("41+")
+    }
+})
+
+# Import data
+data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
+    mutate(choice = recode(choice, CHOICE = "Choice", NO_CHOICE = "No Choice")) |> 
+    mutate(ageset = agegroup(age)) |> 
+    filter(ageset != "41+")
+# Combine choice and environment as single variable
+data$choice_and_env = paste(data$choice, "-", data$env)
+
+# Choice & Environment vs. ΔVR Anxiety
+(ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(x = "Choice Given & VR Environment", y = "Δ VR Anxiety Level", color = "Choice Given", fill = "VR Environment") + 
+    ggtitle("Change in Anxiety Level Against Choice and Environment from Ages {closest_state}") +
+    transition_states(ageset, state_length = 3, wrap = FALSE) + 
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out') +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))) |>
+    animate(renderer = gifski_renderer())
+
+ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
+    labs(x = "Choice Given", y="Δ VR Anxiety", color = "Choice Given") +
+    geom_boxplot() +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
+    labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+>>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 
 data = read_xlsx("all_data.xlsx", sheet = "pooled123")
 
@@ -16,11 +70,6 @@ data$choice_and_env = paste(data$choice, data$env)
 ggplot(data, aes(x = choice_and_env, y = vranxiety)) +
     geom_boxplot()
 
-ggplot(data, aes(x = choice, y = vranxiety)) +
-    geom_boxplot()
-
-ggplot(data, aes(x = env, y = vranxiety)) +
-    geom_boxplot()
 
 anxiety_model = lm(active_ssq_full ~ baseline_ssq_full, data = data)
 
@@ -28,10 +77,38 @@ ggplot(data, aes(x = baseline_ssq_full, y = active_ssq_full)) +
     geom_point() +
     geom_smooth(method = "lm")
 
-ggplot(anxiety_model, aes(x = .fitted, .resid)) +
+ggplot(anxiety_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0)
 
 ggplot(data, aes(x = ssq_full)) +
     geom_boxplot()
+<<<<<<< HEAD
+=======
+
+
+
+vranxiety_model = lm(PVRA ~ BVRA, data = data)
+
+ggplot(data, aes(x = BVRA, y = PVRA)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+
+ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0)
+
+stai_model = lm(p_stai ~ baseline_stai, data = data)
+
+ggplot(data, aes(x = choice_and_env, y = stai)) +
+    geom_boxplot()
+
+ggplot(data, aes(x = baseline_stai, y = p_stai)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+
+ggplot(stai_model, aes(x = .fitted, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0)
+>>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 ```
