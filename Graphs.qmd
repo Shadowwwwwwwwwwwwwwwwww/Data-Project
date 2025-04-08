@@ -63,6 +63,7 @@ ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
 
 
 vranxiety_model = lm(PVRA ~ BVRA, data = data)
+vranxiety_cor = cor(data$PVRA, data$BVRA)
 
 ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
@@ -72,7 +73,10 @@ ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0)
 
+
+
 stai_model = lm(p_stai ~ baseline_stai, data = data)
+stai_cor = cor(data$p_stai, data$baseline_stai)
 
 ggplot(data, aes(x = choice_and_env, y = stai)) +
     geom_boxplot()
