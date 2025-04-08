@@ -37,7 +37,7 @@ data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
 # Combine choice and environment as single variable
 data$choice_and_env = paste(data$choice, "-", data$env)
 
-# Choice & Environment vs. ΔVR Anxiety
+# Choice & Environment vs. Δ VR Anxiety
 (ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(x = "Choice Given & VR Environment", y = "Δ VR Anxiety Level", color = "Choice Given", fill = "VR Environment") + 
@@ -61,12 +61,39 @@ ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
     scale_fill_manual(values=c("lightblue", "orange"))
 
 
+# Choice & Environment vs. Δ STAI Level
+(ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(x = "Choice Given & VR Environment", y = "Δ STAI Level", color = "Choice Given", fill = "VR Environment") + 
+    ggtitle("Change in STAI Level Against Choice and Environment from Ages {closest_state}") +
+    transition_states(ageset, state_length = 3, wrap = FALSE) + 
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out') +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))) |>
+    animate(renderer = gifski_renderer())
 
+ggplot(data, aes(x = choice, y = stai, color = choice)) +
+    labs(x = "Choice Given", y="Δ STAI Level", color = "Choice Given") +
+    geom_boxplot() +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplot(data, aes(x = env, y = stai, fill = env)) +
+    labs(x = "VR Environment", y="Δ STAI Level", fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+
+
+
+# VR anxiety correlation
 vranxiety_model = lm(PVRA ~ BVRA, data = data)
 vranxiety_cor = cor(data$PVRA, data$BVRA)
 
 ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
+    ggtitle(subtitle = "r = {vranxiety_cor}") + 
+    labs(x = "Baseline VR Anxiety Level", y = "Active VR Anxiety Level") + 
     geom_smooth(method = "lm")
 
 ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
@@ -75,13 +102,13 @@ ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
 
 
 
+# STAI correlation
 stai_model = lm(p_stai ~ baseline_stai, data = data)
 stai_cor = cor(data$p_stai, data$baseline_stai)
 
-ggplot(data, aes(x = choice_and_env, y = stai)) +
-    geom_boxplot()
-
 ggplot(data, aes(x = baseline_stai, y = p_stai)) +
+    labs(x = "Baseline STAI Level", y = "Active STAI Level") + 
+    ggtitle(subtitle = "r = {stai_cor}") + 
     geom_point() +
     geom_smooth(method = "lm")
 
