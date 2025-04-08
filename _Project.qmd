@@ -1,6 +1,6 @@
 ---
 title: "Data 1901 Assignment"
-authors: Blake, Leo, Ari, August Gonzales, Harry Le
+authors: Blake Walker, Leo Sharwood, Ari Astawa, August Gonzales, Harry Le, Saksham Jain
 format:
     html:
         embed-resources: true
