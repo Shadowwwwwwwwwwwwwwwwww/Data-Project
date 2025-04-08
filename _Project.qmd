@@ -1,6 +1,6 @@
 ---
 title: "But A Mere, Simple Quarto File"
-authors: Blake, Leo, Ari, August Gonzales, Harry Le
+authors: Ari Astawa, August Gonzales, Saksham Jain, Harry Le, Leo Sharwood, Blake Walker
 format:
     html:
         embed-resources: true
