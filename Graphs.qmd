@@ -8,8 +8,6 @@ format:
 ```{r}
 library(tidyverse)
 library(readxl)
-<<<<<<< HEAD
-=======
 library(gganimate)
 library(gifski)
 library(dplyr)
@@ -61,30 +59,6 @@ ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
     labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
     geom_boxplot() +
     scale_fill_manual(values=c("lightblue", "orange"))
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
-
-data = read_xlsx("all_data.xlsx", sheet = "pooled123")
-
-data$choice_and_env = paste(data$choice, data$env)
-
-ggplot(data, aes(x = choice_and_env, y = vranxiety)) +
-    geom_boxplot()
-
-
-anxiety_model = lm(active_ssq_full ~ baseline_ssq_full, data = data)
-
-ggplot(data, aes(x = baseline_ssq_full, y = active_ssq_full)) +
-    geom_point() +
-    geom_smooth(method = "lm")
-
-ggplot(anxiety_model, aes(x = .fitted, y = .resid)) +
-    geom_point() +
-    geom_hline(yintercept = 0)
-
-ggplot(data, aes(x = ssq_full)) +
-    geom_boxplot()
-<<<<<<< HEAD
-=======
 
 
 
@@ -110,5 +84,4 @@ ggplot(data, aes(x = baseline_stai, y = p_stai)) +
 ggplot(stai_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0)
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 ```

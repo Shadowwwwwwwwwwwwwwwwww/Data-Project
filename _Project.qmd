@@ -7,38 +7,14 @@ format:
 editor: visual
 ---
 
-STILL NEED TO EMBED DATA PROPERLY INTO THE DOCUMENT(OMIT ANY DATA, TURN AGE INTO QUALATATIVE, AND USE A THEME) Also might wanna use Levenes test to show only weak correlations
-
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, include = FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(plotly)
-<<<<<<< HEAD
-library(readxl)
-library(dplyr)
-
-file_path <- "all_data.xlsx"
-all_data <- read_excel("all_data.xlsx", sheet = "pooled123")
-library(car)
-all_data$anxiety_change <- all_data$p_vra - all_data$baseline_vra
-leveneTest(anxiety_change ~ choice, data = all_data)
-=======
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 ```
 
-## Executive Summary
+## Abstract
 
-<<<<<<< HEAD
-Our analysis within this report found that typically no anxiety change relationship could be found between enviroments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur.
-
-#maybe more clear judgement/summary
-
-## Initial Data Analysis
-
-**Overview**
-
-The data was sourced through an experimental survey examining 337 participants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilise groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
-=======
 (Found as "Executive Summary" in the criteria)
 
 Max 50 words: Clear, interesting summary of the main insights/findings from the report.\
@@ -71,108 +47,16 @@ Max 200 words: Discusses source, structure and limitations of data collection. D
     **Overview**
 
     The data was sourced through an experimental testing. (WHERE IT COMES FROM)
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 
-```{r}
-all_data <- all_data %>%
-  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
-         age_group = cut(age, 
-                          breaks = c(15, 20, 25, 30, 35, 40), 
-                          labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),
-                          right = FALSE))  # Create the age groups
+    Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants anxiety reported levels. With these three variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize the ages as groups for which the anxiety changed, while the rest remained as they were. These being the VR environment as a qualitative nominal, and the anxiety level's which is a quantitative discrete variable.
 
-# Filter out outliers for change in anxiety (below 0 or above 5)
-all_data_clean <- all_data %>%
-  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
+    **Limitations**
 
-<<<<<<< HEAD
-# Create the boxplot with the desired y-axis scale using the change in anxiety
-p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
-  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
-  facet_wrap(~ age_group) +  # Separate by age groups
-  labs(title = "Change in Anxiety Levels by System Environment and Age Group",
-       x = "System Environment",
-       y = "Change in Anxiety Level",
-       fill = "Environment") +
-  theme_minimal() +
-  scale_y_continuous(limits = c(-5, 10), 
-                     breaks = seq(-4, 10, by = 2))  # Y-axis ticks every 2 units
-=======
     Within the data not a full population could be used, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, it is not possible to control people's moods and behaviors before entering the VR simulation, as such the data could vary depending on the sets of groups used.
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 
-# Convert the plot to an interactive plot
-ggplotly(p)
-```
+    **Assumption**
 
-<<<<<<< HEAD
-```{r, fig.height=30, fig.width=20}
-
-all_data <- all_data %>%
-  mutate(change_in_anxiety = p_vra - baseline_vra,  # Calculate the change in anxiety
-         age_group = cut(age, 
-                          breaks = c(15, 20, 25, 30, 35, 40), 
-                          labels = c("15-20", "20-25", "25-30", "30-35", "35-40"),
-                          right = FALSE))  # Create the age groups
-
-# Filter out outliers for change in anxiety (below 0 or above 5)
-all_data_clean <- all_data %>%
-  filter(change_in_anxiety >= -4 & change_in_anxiety <= 10)  # Remove rows where change in anxiety is below 0 or above 5
-
-
-# Now, create the faceted boxplot with the two sections:
-# One for participants who chose their environment, 
-# and one for participants who did not choose their environment
-
-p <- ggplot(all_data_clean, aes(x = env, y = change_in_anxiety, fill = env)) +
-  geom_boxplot(na.rm = TRUE) +  # Ensure that missing values don't break the plot
-  facet_wrap(~ choice + age_group, ncol = 1) +  # Facet by choice condition and age group
-  labs(title = "Change in Anxiety Levels by System Environment",
-       x = "System Environment",
-       y = "Change in Anxiety Level",
-       fill = "Environment") +
-  theme_minimal() +
-  scale_y_continuous(limits = c(-10, 10), 
-                     breaks = seq(-5, 10, by = 5)) +  # Y-axis ticks every 2 units
-  theme(strip.text = element_text(size = 10),  # Adjust facet label size
-        strip.background = element_blank(),  # Remove background color from facet labels
-        panel.spacing = unit(2, "lines"),  # Increase spacing between panels
-        axis.text.y = element_text(size = 12, angle = 0, hjust = 1),  # Increase size and adjust angle of y-axis labels
-        axis.title.y = element_text(size = 14),  # Increase the size of y-axis title
-        axis.text.x = element_text(size = 10))  # Adjust x-axis label size
-
-# Convert the plot to an interactive plot and increase vertical size with margin adjustments
-ggplotly(p) %>%
-  layout(height = 1000,  # Adjust the height further
-         margin = list(l = 100, r = 100, t = 100, b = 100)) 
-```
-
-**Limitations**
-
-This study is limited by its sample size, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, external factors like mood and behaviors before entering the VR simulation will not be able to be controlled, as such the data could vary depending on the sets of age groups.
-
-#maybe mention how mood will be accounted for
-
-**Assumption**
-
-Within this report there was an assumption that people were honest with their symptoms, and variation in anxiety levels. Along with having any non permitted knowledge on how the test is conducted beyond what has been told. Furthermore, it is assumed that neither the conductors or participants had any bias on the data. It is also assumed the test were completed in the same conditions, such that no co-founding variables would have altered the data sets. Additionally, data cleaning had to take place to remove outliers, these were anxiety levels that were outside of the possible range, as these were assumed to be a mistake. Furthermore, the data was concluded down to the age groups between 15 and 40 as these had the most data, and were deemed the most representative of real world scenarios.
-
-## Research Question
-
-GRAPHS: CHOICE/NO CHOICE, (AGE, ENVIROMENT, ANXIETY IN ONE), INITIAL AND FINAL ANXIETY(so if large at beginning did it reduce), ANYTHING THAT MAY RELATE
-
-Explores a research question, using numerical and/or graphical summaries (i.e., ggplot, gganimation, maps) which give insight.
-
-**Q) Does the volition on the type of VR environment impact the severity of anxiety level deviation**
-
-The data conveyed that the change in anxiety levels between users of sunny, and snowy environments varied by minuscule amounts. This is shown in the median, mean, and quartiles of the data. The average median among all age groups for sunny environments was a change of 1.4, while snowy was 1.6, revealing that snowy environments had a slightly higher change. Furthermore, the average range of IQR was 3.6 for sunny environments, and 3.1 for snowy. This implies that snowy environments more narrow IQR may be a resultant of a slightly more decisive, consistent and reduced overall change. Hence, the small difference in median, and IQR range indicate that system environment has little to no correlation with anxiety level changes. Furthermore, the data implied that little change would result from a choice, as the average median for participants who chose was, 1.833 on the anxiety test while it was 1.5 for those who did not, illustrating a negligible relationship. Whereas the average range of IQR for those who chose was 3.1, whereas it was 3.9 for those who did not get to choose. These two contrast each other and suggest a possible correlation in variability for participants who do not choose the environment.
-
-Our findings conclude that there is a negligible influence on change in anxiety levels due to the system environment. Due to the tendency of the average data to remain similar from the comparatives, therefore it is not possible to determine any large correlation. Additionally, people with a higher initial anxiety level tended to have the largest change. Although factors apart from system environment, and choice might have played a larger role in the resultant anxiety level due to the relatively low change found in the respective variables (Kwon, 2020). Furthermore, our findings reflect that choice had a small effect, producing narrower max, min's, and IQR's, conveying a possible relationship. Where someone's previous experience might manipulate the variability in the data due to experiences from similar environments (Matteo Girondini et al., 2023).
-
-Overall, we came to a consensus that our findings reflect that volition might have an impact on the variability of anxiety level, where a lack of choice leads to higher variability while having a choice leads to more consistent levels. Although the changes are small they do indicate a psychological variability in the response. Whereas the actual environment will most likely not affect the change in anxiety levels.
-=======
     There is an assumption that people were honest with their symptoms, and variation in anxiety levels throughout the experiment. Along with having any non permitted knowledge on how the test is conducted beyond what has been told to the participants. Furthermore, it is assumed that neither the conductors or participants had any bias on the data, whether it be more stable data or a greater change in symptoms. Moreover, it is assumed the test were completed in the same way, so no co-founding variables would have altered the data sets. (ADD ANYTHING ABOUT CLEANING THE DATA(E.G REMOVING CERTAIN AGE GROUPS)
->>>>>>> 2476437 (New graphs for STAI levels (self-reported anxiety)/)
 
 ## Professional Standard of Report
 
@@ -180,15 +64,7 @@ Overall, we came to a consensus that our findings reflect that volition might ha
 
 ------------------------------------------------------------------------
 
-## Acknowledgements
-
-1.  See APA information here: <https://libguides.library.usyd.edu.au/citation/apa7>
-2.  The references are not included in the word count.
-3.  The comments on articles can be put in a separate section, or weaved throughout the report, at appropriate places.
-
-The report ends with an 'Acknowledgments' section. The Acknowledgment section includes:
-
--   a list of group meetings (date and time and attendance) - the contribution of each group member
+## References & Acknowledgements
 
 Max 50 words: Carefully relates findings to 2 articles (can be research or media etc). Articles are listed in the References at the end, using APA.\
 
@@ -207,9 +83,3 @@ The report ends with an 'Acknowledgments' section. The Acknowledgment section in
 {{< include "Acknowledgements and Resources.qmd" >}}
 
 -   an AI usage statement explaining how AI was used, the name and version of AI tools used, the date/s of use of the AI tools and a link to the entire prompt session used to inform the report. If no AI was used, this must be made explicit.
-
-## References
-
-Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. *Applied Sciences*, *10*(4932), 4932. https://doi.org/10.3390/app10144932
-
-Matteo Girondini, Milena Stefanova, Pillan, M., & Gallace, A. (2023). *The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study*. *26*(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
