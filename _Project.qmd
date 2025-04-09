@@ -1,5 +1,4 @@
 ---
-title: "Data 1901 Assignment"
 title: "Investigating the Effects of Choice on Mitigating Anxiety"
 authors: Ari Astawa, August Gonzales, Saksham Jain, Harry Le, Leo Sharwood, Blake Walker
 format:
@@ -53,7 +52,73 @@ This investigation has a unique focus on anxiety. Experimentally, our report exa
 
 This dataset and analysis is only somewhat limited by the sample size, along with the discrepancies found between the 3 experiments. We assume within this report that pooled experimental data is consistent between the separate trials. Additionally, there was minor data cleaning, including, but not limited to anxiety levels that were outside of the possible range. Furthermore, the data was selected down to the age groups between 15 and 40 so as to be more representative of the targeted survey bloc.
 
-## Research Question (Abstract)
+## Analysis
+
+::: panel-tabset
+## Choice & Environment vs. Δ VR Anxiety Separated by Age Ranges
+
+```{r}
+# Choice & Environment vs. Δ VR Anxiety separated by age ranges
+ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(title = "Choice & Environment vs. Change in Anxiety Level by Age Ranges {closest_state}",
+        x = "Choice Given & VR Environment",
+        y = "Δ VR Anxiety Level",
+        color = "Choice Given",
+        fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3")) +
+    transition_states(ageset, transition_length = 1, state_length = 1, wrap = TRUE) +
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out')
+
+animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 15)
+```
+
+## Choice & Environment vs. Δ VR Anxiety
+
+```{r}
+# Choice & Environment vs. Δ VR Anxiety separated **NO AGE RANGES**
+ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(title = "Choice & Environment vs. Change in Anxiety Level by Age Ranges {closest_state}",
+        x = "Choice Given & VR Environment",
+        y = "Δ VR Anxiety Level",
+        color = "Choice Given",
+        fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+```
+
+## Choice Only and Environment Only
+
+```{r}
+# ONLY Choice vs. Δ VR Anxiety
+ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
+    labs(x = "Choice Given", y="Δ VR Anxiety", color = "Choice Given") +
+    geom_boxplot() +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+# ONLY Environment vs. Δ VR Anxiety
+ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
+    labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+```
+
+:::
+
+
+
+
+
+# ONLY Environment vs. Δ VR Anxiety
+ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
+    labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+```
 
 Our analysis within this report found that typically no anxiety change relationship could be found between environments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
 
