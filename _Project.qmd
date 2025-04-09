@@ -1,5 +1,6 @@
 ---
 title: "Data 1901 Assignment"
+title: "Investigating the Effects of Choice on Mitigating Anxiety"
 authors: Ari Astawa, August Gonzales, Saksham Jain, Harry Le, Leo Sharwood, Blake Walker
 format:
     html:
@@ -9,39 +10,52 @@ editor: visual
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
-library(ggplot2)
-library(plotly)
 library(readxl)
+library(gganimate)
+library(gifski)
 library(dplyr)
+
+# Define age groups
+agegroup = Vectorize(function(number) {
+	if (number >= 17 & number <= 20) {
+		return ("17-20")
+	} else if (number >= 21 & number <= 25) {
+		return ("21-25")
+	} else if (number >= 26 & number <= 30) {
+		return ("26-30")
+	} else if (number >= 31 & number <= 35) {
+		return ("31-35")
+	} else if (number >= 36 & number <= 40) {
+		return ("36-40")
+	} else {
+		return ("41+")
+    }
+})
+
+# Import data
+data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
+    mutate(choice = recode(choice, CHOICE = "Choice", NO_CHOICE = "No Choice")) |> 
+    mutate(ageset = agegroup(age)) |> 
+    filter(ageset != "41+")
+# Combine choice and environment as single variable
+data$choice_and_env = paste(data$choice, "-", data$env)
 ```
 
 ## Abstract
 
-Our analysis within this report found that typically no anxiety change relationship could be found between enviroments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
+Being able to mitigate anxiety associated with any given activity is always a desirable outcome. Considering the frequency of anticipatory anxiety in daily life, it is worth investigating whether the ability to choose—and thus exert some level of control—can reduce detrimental emotional responses. The analysis in this report finds that choice does not play a significant role in managing or reducing the effects of anxiety that precedes an activity with perceived displeasure.
 
 ## Initial Data Analysis
 
-The data was sourced through an experimental survey examining 337 partiicipants for the VR nocebo affect. Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants reported anxiety levels. With these variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize groups for which the anxiety changed, while the rest remained. These being the VR environment as a qualitative nominal, and the anxiety level's quantitative discrete variable, and choice as a qualitative nominal.
+The data was sourced through an experimental survey examining 337 participants on the effects of choice on socially acquired nocebo effects in the context of cybersickness in Virtual Reality (VR). Overall, the dataset was well structured and documented with sound integrity.
 
-```         
-**Overview**
-```
+This investigation has a unique focus on anxiety. Experimentally, our report examines how choice plays a role in modulating the level of anxiety participants have to experiencing VR having understood possible symptoms associated with the activity. The variables of Choice, VR Environment, VR Anxiety (Level), Baseline/Active/Delta Anxiety, and Age were all considered. In particular, a reclassification of Age from a quantitative continuous variable to a qualitative nominal was done. All other data types were maintained: Choice as qualitative nominal, VR Environment as qualitative nominal, VR Anxiety as quantitative discrete, and B/A/D Anxiety as quantitative discrete.
 
-Our investigation has a unique focus on age groups within the experiments, and how a VR environment may cause a impact on the fluctuation of the participants anxiety reported levels. With these three variables we had to reclassify age from a quantitative continuous variable into a qualitative nominal to utilize the ages as groups for which the anxiety changed, while the rest remained as they were. These being the VR environment as a qualitative nominal, and the anxiety level's which is a quantitative discrete variable.
-
-```         
-**Limitations**
-```
-
-This study is limited by its sample size, this entails that the experiment will not be able to get perfectly accurate results. Furthermore, external factors like mood and behaviors before entering the VR simulation will not be able to be controlled, as such the data could vary depending on the sets of age groups.
-
-```         
-**Assumption**
-```
-
-Within this report there was an assumption that people were honest with their symptoms, and variation in anxiety levels. Along with having any non permitted knowledge on how the test is conducted beyond what has been told. Furthermore, it is assumed that neither the conductors or participants had any bias on the data. It is also assumed the test were completed in the same conditions, such that no confounding variables would have altered the data sets. Additionally, data cleaning had to take place to remove outliers, these were anxiety levels that were outside of the possible range, as these were assumed to be a mistake. Furthermore, the data was concluded down to the age groups between 15 and 40 as these had the most data, and were deemed the most representative of real world scenarios.
+This dataset and analysis is only somewhat limited by the sample size, along with the discrepancies found between the 3 experiments. We assume within this report that pooled experimental data is consistent between the separate trials. Additionally, there was minor data cleaning, including, but not limited to anxiety levels that were outside of the possible range. Furthermore, the data was selected down to the age groups between 15 and 40 so as to be more representative of the targeted survey bloc.
 
 ## Research Question (Abstract)
+
+Our analysis within this report found that typically no anxiety change relationship could be found between environments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
 
 The data conveyed that the change in anxiety levels between users of sunny, and snowy environments varied by miniscule amounts. This was concluded because the median change among all age groups for sunny environments was 1.4, while snowy was 1.6, revealing that snowy environments had a slightly higher change. Furthermore, the average range of IQR was 3.6 for sunny environments, and 3.1 for snowy. This implies that snowy environments lower IQR were resultant of a more decisive and consistent change. Hence, the small difference in median, and IQR range indicate that system environment has little to no correlation with anxiety level changes.
 

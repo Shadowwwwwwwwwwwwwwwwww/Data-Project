@@ -5,7 +5,8 @@ format:
         embed-resources: true
 ---
 
-```{r}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+
 library(tidyverse)
 library(readxl)
 library(gganimate)
@@ -37,82 +38,88 @@ data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
 # Combine choice and environment as single variable
 data$choice_and_env = paste(data$choice, "-", data$env)
 
+```
+
+```{r}
+
 # Choice & Environment vs. Δ VR Anxiety
-(ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+ce_vranx_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
-    labs(x = "Choice Given & VR Environment", y = "Δ VR Anxiety Level", color = "Choice Given", fill = "VR Environment") + 
-    ggtitle("Change in Anxiety Level Against Choice and Environment from Ages {closest_state}") +
-    transition_states(ageset, state_length = 3, wrap = FALSE) + 
+    labs(title = "Change in Anxiety Level Against Choice and Environment from Ages {closest_state}",
+        x = "Choice Given & VR Environment",
+        y = "Δ VR Anxiety Level",
+        color = "Choice Given",
+        fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3")) +
+    transition_states(ageset, transition_length = 1, state_length = 1, wrap = TRUE) +
     enter_fade() + 
     exit_shrink() + 
-    ease_aes('exponential-in-out') +
-    scale_fill_manual(values=c("lightblue", "orange")) +
-    scale_colour_manual(values=c("chartreuse4", "brown3"))) |>
-    animate(renderer = gifski_renderer())
+    ease_aes('exponential-in-out')
 
+animate(ce_vranx_plot, renderer = gifski_renderer(), duration = 15)
+
+# ONLY Choice vs. Δ VR Anxiety
 ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
     labs(x = "Choice Given", y="Δ VR Anxiety", color = "Choice Given") +
     geom_boxplot() +
     scale_colour_manual(values=c("chartreuse4", "brown3"))
 
+# ONLY Environment vs. Δ VR Anxiety
 ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
     labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
     geom_boxplot() +
     scale_fill_manual(values=c("lightblue", "orange"))
+```
 
+```{r}
 
-# Choice & Environment vs. Δ STAI Level
-(ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) + 
-    geom_boxplot() + 
-    labs(x = "Choice Given & VR Environment", y = "Δ STAI Level", color = "Choice Given", fill = "VR Environment") + 
-    ggtitle("Change in STAI Level Against Choice and Environment from Ages {closest_state}") +
-    transition_states(ageset, state_length = 3, wrap = FALSE) + 
-    enter_fade() + 
-    exit_shrink() + 
-    ease_aes('exponential-in-out') +
-    scale_fill_manual(values=c("lightblue", "orange")) +
-    scale_colour_manual(values=c("chartreuse4", "brown3"))) |>
-    animate(renderer = gifski_renderer())
-
-ggplot(data, aes(x = choice, y = stai, color = choice)) +
-    labs(x = "Choice Given", y="Δ STAI Level", color = "Choice Given") +
-    geom_boxplot() +
-    scale_colour_manual(values=c("chartreuse4", "brown3"))
-
-ggplot(data, aes(x = env, y = stai, fill = env)) +
-    labs(x = "VR Environment", y="Δ STAI Level", fill = "VR Environment") +
-    geom_boxplot() +
-    scale_fill_manual(values=c("lightblue", "orange"))
-
-
-
-# VR anxiety correlation
-vranxiety_model = lm(PVRA ~ BVRA, data = data)
-vranxiety_cor = cor(data$PVRA, data$BVRA)
-
+# Baseline VR Anxiety Rating vs. Active VR Anxiety Rating
+# This graph allows us to predict VR anxiety after the VR experience from self-reported levels of anxiety *beforehand*
 ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
-    ggtitle(subtitle = "r = {vranxiety_cor}") + 
-    labs(x = "Baseline VR Anxiety Level", y = "Active VR Anxiety Level") + 
-    geom_smooth(method = "lm")
+    geom_smooth(method = "lm") +
+    labs(title = "Baseline VR Anxiety Rating vs. Active VR Anxiety Rating",
+         x = "Baseline VR Anxiety Rating",
+         y = "Active VR Anxiety Rating")
+
+# Appendix A: Residual Plot
+vranxiety_model = lm(PVRA ~ BVRA, data = data)
 
 ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
-    geom_hline(yintercept = 0)
+    geom_hline(yintercept = 0) +
+    labs(title = "BVRA vs. AVRA Residual Plot",
+         x = "Predicted Values",
+         y = "Error")
 
 
+# Choice & Environment vs. Δ State Anxiety Level
+# This graph allows us to predict how **GENERAL** anxiety *changes* based on Choice and Environment
+ggplot(data, aes(x = choice_and_env, y = stai)) +
+    geom_boxplot() +
+    labs(title = "Choice & Environment vs. Δ State Anxiety Level",
+         x = "Choice & Environment",
+         y = "Δ STAI-6 Sum Score")
 
-# STAI correlation
-stai_model = lm(p_stai ~ baseline_stai, data = data)
-stai_cor = cor(data$p_stai, data$baseline_stai)
 
+# Baseline State Anxiety Rating vs. Active State Anxiety Rating
+# This graph allows us to predict **GENERAL** anxiety after the VR experience from self-reported levels of **GENERAL** anxiety *beforehand*
 ggplot(data, aes(x = baseline_stai, y = p_stai)) +
-    labs(x = "Baseline STAI Level", y = "Active STAI Level") + 
-    ggtitle(subtitle = "r = {stai_cor}") + 
     geom_point() +
-    geom_smooth(method = "lm")
+    geom_smooth(method = "lm") +
+    labs(title = "Baseline State Anxiety Rating vs. Active State Anxiety Rating",
+         x = "Baseline STAI-6 Sum Score",
+         y = "Active STAI-6 Sum Score") +
+    geom_abline(intercept = 0, slope = 1)
+
+# Appendix B: Residual Plot
+stai_model = lm(p_stai ~ baseline_stai, data = data)
 
 ggplot(stai_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
-    geom_hline(yintercept = 0)
+    geom_hline(yintercept = 0) +
+    labs(title = "B-STAI-6 Sum Score vs. A-STAI-6 Sum Score Residual Plot",
+         x = "Predicted Values",
+         y = "Error")
 ```
