@@ -186,7 +186,7 @@ ce_stai_age_plot = ggplot(data, aes(x = choice_and_env, y = stai, color = choice
 animate(ce_stai_age_plot, renderer = gifski_renderer(), duration=20)
 ```
 
-#### Separate Choice and Environment vs Δ State Anxiety Level
+#### Δ State Anxiety Level vs. Choice and Environment Separately
 
 ```{r}
 #| label: separate-ce-stai
@@ -225,8 +225,7 @@ ggplot(data, aes(x = baseline_stai, y = p_stai)) +
     geom_smooth(method = "lm") +
     labs(title = "Active State Anxiety Rating vs. Baseline State Anxiety Rating",
          x = "Baseline STAI-6 Sum Score",
-         y = "Active STAI-6 Sum Score") +
-    geom_abline(intercept = 0, slope = 1)
+         y = "Active STAI-6 Sum Score")
 ```
 
 ```{r}
