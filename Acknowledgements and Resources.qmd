@@ -1,29 +1,29 @@
-### Acknowledgements
+## References
 
-- GitHub was utilized for easy project management
+Alex. (2020, December 7). How to hide import messages when importing a library? \[Forum post\]. Stack Overflow. https://stackoverflow.com/q/65189127
 
-### Resources
+Ben. (2020, December 7). Answer to ‘How to hide import messages when importing a library?’ \[Online post\]. Stack Overflow. https://stackoverflow.com/a/65189295
 
--   https://quarto.org/docs/authoring/includes.html
+Embedding from Other Documents. (n.d.). Quarto. Retrieved 10 April 2025, from https://quarto.org/docs/authoring/notebook-embed.html
 
--   https://rstudio.github.io/cheatsheets/html/rmarkdown.html#embed-code-with-knitr
+Engelmann, J. B., Meyer, F., Fehr, E., & Ruff, C. C. (2015). Anticipatory Anxiety Disrupts Neural Valuation during Risky Choice. The Journal of Neuroscience, 35(7), 3085–3099. https://doi.org/10.1523/JNEUROSCI.2880-14.2015
 
--   https://quarto.org/docs/authoring/notebook-embed.html
+Girondini, M., Stefanova, M., Pillan, M., & Gallace, A. (2023). The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study. Cyberpsychology, Behavior, and Social Networking, 26(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
 
--   <https://stackoverflow.com/questions/65189127/how-to-hide-import-messages-when-importing-a-library>
+Grupe, D. W., & Nitschke, J. B. (2013). Uncertainty and Anticipation in Anxiety. Nature Reviews. Neuroscience, 14(7), 488–501. https://doi.org/10.1038/nrn3524
 
--   dataset provided
+Huff, C. (2025, January 16). Are you suffering from anticipatory anxiety? Here’s how to cope. Https://Www.Apa.Org. https://www.apa.org/monitor/2025/06/anticipatory-anxiety
 
--   research report provided
+Includes. (n.d.). Quarto. Retrieved 10 April 2025, from https://quarto.org/docs/authoring/includes.html
 
--   https://pubmed.ncbi.nlm.nih.gov/36809117/#:~:text=As%20expected%2C%20negative%20audience%20elicited,the%20valence%20of%20previous%20experience.
+Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. Applied Sciences, 10(14), Article 14. https://doi.org/10.3390/app10144932
 
--   https://www.mdpi.com/2076-3417/10/14/4932
+Saunders, C., Colagiuri, B., & Barnes, K. (2023). Socially Acquired Nocebo Effects Generalize but Are Not Attenuated by Choice. Annals of Behavioral Medicine: A Publication of the Society of Behavioral Medicine, 57(12), 1069–1080. https://doi.org/10.1093/abm/kaad056
 
--   https://pubmed.ncbi.nlm.nih.gov/36809117/#:~:text=As%20expected%2C%20negative%20audience%20elicited,the%20valence%20of%20previous%20experience.
+## Acknowledgements
 
--   https://www.mdpi.com/2076-3417/10/14/4932
+This report did **NOT** include the output of Generative Text Artificial Intelligence (AI). AI was used in a minor capacity by some group members to generate code for reference as examples.
 
-- Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. *Applied Sciences*, *10*(4932), 4932. https://doi.org/10.3390/app10144932
+### Meetings and Contributions
 
-- Matteo Girondini, Milena Stefanova, Pillan, M., & Gallace, A. (2023). *The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study*. *26*(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
+{{< include "Meetings and Contributions.qmd" >}}
