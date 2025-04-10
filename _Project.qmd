@@ -15,7 +15,7 @@ execute:
     message: false
 ---
 
-```{r setup, echo=TRUE, warning=FALSE, message=FALSE}
+```{r}
 #| code-fold: true
 library(tidyverse)
 library(readxl)
