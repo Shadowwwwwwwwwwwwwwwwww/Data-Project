@@ -72,7 +72,7 @@ ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = 
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
     scale_colour_manual(values=c("chartreuse4", "brown3")) +
-    transition_states(ageset, transition_length = 1, state_length = 5, wrap = TRUE) +
+    transition_states(ageset, transition_length = 1, state_length = 5, wrap = FALSE) +
     enter_fade() + 
     exit_shrink() + 
     ease_aes('exponential-in-out')
@@ -178,7 +178,7 @@ ce_stai_age_plot = ggplot(data, aes(x = choice_and_env, y = stai, color = choice
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
     scale_colour_manual(values=c("chartreuse4", "brown3")) +
-    transition_states(ageset, transition_length = 1, state_length = 5, wrap = TRUE) +
+    transition_states(ageset, transition_length = 1, state_length = 5, wrap = FALSE) +
     enter_fade() + 
     exit_shrink() + 
     ease_aes('exponential-in-out')
