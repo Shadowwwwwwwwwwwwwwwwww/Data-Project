@@ -3,7 +3,7 @@ title: "Graphs"
 format:
     html:
         embed-resources: true
-	code-fold: true
+        code-fold: true
         code-tools: true
 execute:
     warning: false
