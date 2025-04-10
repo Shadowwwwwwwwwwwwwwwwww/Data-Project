@@ -10,9 +10,8 @@ execute:
     message: false
 ---
 
-```{r setup, code-fold=TRUE, warning=FALSE, message=FALSE}
+```{r setup}
 #| label: setup
-knitr::opts_chunk$set(code-fold=TRUE, warning=FALSE, message=FALSE)
 library(tidyverse)
 library(cowplot)
 library(readxl)
