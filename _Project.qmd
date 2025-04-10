@@ -8,6 +8,11 @@ format:
         toc-location: right
         toc-title: "Table of Contents"
         toc-depth: 3
+        code-fold: true
+        code-tools: true
+execute:
+    warning: false
+    message: false
 ---
 
 ```{r setup, echo=TRUE, warning=FALSE, message=FALSE}
