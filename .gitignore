@@ -5,6 +5,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.quarto
 
 # Export excludes
 *.html
