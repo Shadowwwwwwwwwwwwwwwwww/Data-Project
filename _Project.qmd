@@ -4,8 +4,14 @@ authors: Ari Astawa, August Gonzales, Saksham Jain, Harry Le, Leo Sharwood, Blak
 format:
     html:
         embed-resources: true
+        toc: true
+        toc-location: right
+        toc-title: "Table of Contents"
+        toc-depth: 3
 editor: visual
 ---
+
+{{< embed Graphs.qmd#setup >}}
 
 ## Abstract
 
@@ -13,7 +19,7 @@ Being able to mitigate anxiety associated with any given activity is always a de
 
 ## Initial Data Analysis
 
-The data was sourced through an experimental survey examining 337 participants on the effects of choice on socially acquired nocebo effects in the context of cybersickness in Virtual Reality (VR). In general, the dataset was well structured and documented with sound integrity, though some changes had to be made.
+The data was sourced through an experimental survey examining 337 participants on the effects of choice on socially acquired nocebo effects in the context of cybersickness in Virtual Reality (VR) (Saunders, 2023). In general, the dataset was well structured and documented with sound integrity, though some changes had to be made.
 
     This investigation has a unique focus on anxiety. Experimentally, our report examines how choice plays a role in modulating the level of anxiety participants have to experiencing VR having understood possible symptoms associated with the activity. The variables of Choice, VR Environment, VR Anxiety (Level), Baseline/Active/Delta Anxiety, and Age were all considered. In particular, a reclassification of Age from a quantitative continuous variable to a qualitative nominal was done. A new variable was created, representing a combination of Choice and VR Environment, but this is only used to aide in graphing. All other data types were maintained: Choice as qualitative nominal, VR Environment as qualitative nominal, VR Anxiety as quantitative discrete, and B/A/D Anxiety as quantitative discrete.
 
