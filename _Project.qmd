@@ -8,7 +8,11 @@ format:
         toc-location: right
         toc-title: "Table of Contents"
         toc-depth: 3
-editor: visual
+        code-fold: true
+        code-tools: true
+execute:
+    warning: false
+    message: false
 ---
 
 {{< embed Graphs.qmd#setup >}}
