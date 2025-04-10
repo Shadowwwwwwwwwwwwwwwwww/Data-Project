@@ -8,6 +8,8 @@ editor: visual
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
 library(tidyverse)
 library(readxl)
 library(gganimate)
@@ -108,17 +110,6 @@ ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
 ```
 
 :::
-
-
-
-
-
-# ONLY Environment vs. Δ VR Anxiety
-ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
-    labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
-    geom_boxplot() +
-    scale_fill_manual(values=c("lightblue", "orange"))
-```
 
 Our analysis within this report found that typically no anxiety change relationship could be found between environments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
 
