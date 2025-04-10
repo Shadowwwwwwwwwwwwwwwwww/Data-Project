@@ -10,6 +10,8 @@ Engelmann, J. B., Meyer, F., Fehr, E., & Ruff, C. C. (2015). Anticipatory Anxiet
 
 Girondini, M., Stefanova, M., Pillan, M., & Gallace, A. (2023). The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study. Cyberpsychology, Behavior, and Social Networking, 26(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
 
+goollan. (2019, April 30). How do I keep my subtitles when I use ggplotly() \[Forum post\]. Stack Overflow. https://stackoverflow.com/q/55923256
+
 Grupe, D. W., & Nitschke, J. B. (2013). Uncertainty and Anticipation in Anxiety. Nature Reviews. Neuroscience, 14(7), 488–501. https://doi.org/10.1038/nrn3524
 
 Huff, C. (2025, January 16). Are you suffering from anticipatory anxiety? Here’s how to cope. Https://Www.Apa.Org. https://www.apa.org/monitor/2025/06/anticipatory-anxiety
@@ -18,11 +20,13 @@ Includes. (n.d.). Quarto. Retrieved 10 April 2025, from https://quarto.org/docs/
 
 Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. Applied Sciences, 10(14), Article 14. https://doi.org/10.3390/app10144932
 
+Salazar, M. (2020, April 17). Answer to ‘How do I keep my subtitles when I use ggplotly()’ \[Online post\]. Stack Overflow. https://stackoverflow.com/a/61277897
+
 Saunders, C., Colagiuri, B., & Barnes, K. (2023). Socially Acquired Nocebo Effects Generalize but Are Not Attenuated by Choice. Annals of Behavioral Medicine: A Publication of the Society of Behavioral Medicine, 57(12), 1069–1080. https://doi.org/10.1093/abm/kaad056
 
 ## Acknowledgements
 
-This report did **NOT** include the output of Generative Text Artificial Intelligence (AI). AI was used in a minor capacity by some group members to generate code for reference as examples.
+This report did **NOT** emply the use of Artificial Intelligence (AI).
 
 ### Meetings and Contributions
 

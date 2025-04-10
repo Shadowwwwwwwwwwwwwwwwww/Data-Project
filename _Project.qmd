@@ -3,65 +3,308 @@ title: "Investigating the Effects of Choice on Mitigating Anxiety"
 authors: Ari Astawa, August Gonzales, Saksham Jain, Harry Le, Leo Sharwood, Blake Walker
 format:
     html:
-        embed-resources: true
         toc: true
         toc-location: right
         toc-title: "Table of Contents"
         toc-depth: 3
         code-fold: true
         code-tools: true
+        embed-resources: true
 execute:
     warning: false
     message: false
+editor: visual
 ---
 
-{{< embed Graphs.qmd#setup >}}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(cowplot)
+library(readxl)
+library(gganimate)
+library(gifski)
+library(dplyr)
+library(plotly)
+
+# Define age groups
+agegroup = Vectorize(function(number) {
+	if (number >= 16 & number <= 20) {
+		return ("16-20")
+	} else if (number >= 21 & number <= 25) {
+		return ("21-25")
+	} else if (number >= 26 & number <= 30) {
+		return ("26-30")
+	} else if (number >= 31 & number <= 35) {
+		return ("31-35")
+	} else if (number >= 36 & number <= 40) {
+		return ("36-40")
+	} else {
+		return ("41+")
+    }
+})
+
+# Import data
+data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
+    mutate(choice = recode(choice, CHOICE = "Choice", NO_CHOICE = "No Choice")) |> 
+    mutate(ageset = agegroup(age)) |> 
+    filter(ageset != "41+")
+# Combine choice and environment as single variable
+data$choice_and_env = paste(data$choice, "-", data$env)
+```
 
 ## Abstract
 
-Being able to mitigate anxiety associated with any given activity is always a desirable outcome. Considering the frequency of anticipatory anxiety in daily life, it is worth investigating whether the ability to choose—and thus exert some level of control—can reduce negative emotional responses. The analysis in this report finds that choice does not play a significant role in managing or reducing the effects of anxiety that precedes an activity with perceived displeasure.
+Mitigating anticipatory anxiety is always a desirable outcome. Considering the frequency of anxiety-inducing events in daily life, it is worth investigating whether decision making ability can reduce negative emotional responses. This report finds that choice has no significant role in managing anxiety that precedes activities with perceived displeasure.
 
 ## Initial Data Analysis
 
-The data was sourced through an experimental survey examining 337 participants on the effects of choice on socially acquired nocebo effects in the context of cybersickness in Virtual Reality (VR) (Saunders, 2023). In general, the dataset was well structured and documented with sound integrity, though some changes had to be made.
+-   The data was sourced from an experimental survey examining 337 participants on choice and socially acquired nocebo effects in Virtual Reality (VR) (Saunders, 2023).
 
-```         
-This investigation has a unique focus on anxiety. Experimentally, our report examines how choice plays a role in modulating the level of anxiety participants have to experiencing VR having understood possible symptoms associated with the activity. The variables of Choice, VR Environment, VR Anxiety (Level), Baseline/Active/Delta Anxiety, and Age were all considered. In particular, a reclassification of Age from a quantitative continuous variable to a qualitative nominal was done. A new variable was created, representing a combination of Choice and VR Environment, but this is only used to aide in graphing. All other data types were maintained: Choice as qualitative nominal, VR Environment as qualitative nominal, VR Anxiety as quantitative discrete, and B/A/D Anxiety as quantitative discrete.
-```
+-   In general, the dataset was well structured and documented with sound integrity.
 
-This dataset and analysis is only somewhat limited by the sample size, especially taking into account the age of participants. This is accounted for by the choice to include only participants between the ages 15-40, as there was a lack of older subjects and thus have little statistical significance. The decision to turn age into a qualitative nominal variable was undertaken in order to remedy inconsistent numbers of people in each specific age. Additionally, there were errors with the variable names and descriptions. The data dictionary had the definitions of p_e and p_stai swapped, which was verified by the calculations used to generate these variables returning correct values for the name of expression but not description. These were expect - BE and stai - baseline_stai respectively. In addition, the variabls BVRA and PVRA had aliases baseline_vra and p_vra, which was remedied by the agreement to only use the first forms. Despite the slight changes in methodology for each experimental set, we assume within this report that pooled experimental data is representative between the separate trials.
+-   This investigation has a unique focus on anxiety. Variables of Choice, VR Environment, VR Anxiety (Level), Baseline/Active/Delta Anxiety, and Age were all considered.
+
+    -   Age was reclassified from quantitative continuous to qualitative nominal.
+
+-   A new variable of a combination of Choice and VR Environment was created to aide in grpahing.
+
+-   This dataset and analysis is only somewhat limited by the sample size. We assume the three separate runs of the experiment were methodologically consistent across the pooled dataset.
+
+-   Minor data cleaning was performed to exclude age groups outside 15-40 years old to be more representative of the targeted survey bloc.
+
+-   The decision to turn age into a qualitative nominal variable was undertaken in order to remedy the inconsistent distribution of ages.
+
+-   Minor discrepancies in the dataset regarding variable names and descriptions were found. The definitions of `p_e` and `p_stai` were swapped in the data dictionary, verified by calculations.
 
 ## Analysis
 
 ::: panel-tabset
 ## Choice & Environment vs. Δ VR Anxiety, Separation by Age Ranges
 
-{{< embed Graphs.qmd#ce-vranx-age >}}
+```{r}
+#| label: ce-vranx-age
+#| code-fold: true
+
+ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(title = "Change in Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
+         x = "Choice Given & VR Environment",
+         y = "Δ VR Anxiety Level",
+         color = "Choice Given",
+         fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3")) +
+    transition_states(ageset, transition_length = 1, state_length = 5, wrap = FALSE) +
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out')
+
+animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 20)
+```
 
 ## Choice & Environment vs. Δ VR Anxiety, No Separation by Age Ranges
 
-{{< embed Graphs.qmd#ce-vranx-noage >}}
+```{r}
+#| label: ce-vranx-noage
+#| code-fold: true
+ce_vranx_noage_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(title = "Change in Anxiety Level vs. Choice & Environment",
+         x = "Choice Given & VR Environment",
+         y = "Δ VR Anxiety Level",
+         color = "Choice Given",
+         fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplotly(ce_vranx_noage_plot)
+```
 
 ## Choice Only and Environment Only
 
-{{< embed Graphs.qmd#separate-ce-vranx >}}
+```{r}
+#| label: separate-ce-vranx
+#| code-fold: true
+
+# ONLY Δ VR Anxiety vs. Choice
+choice_plot = ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
+    labs(x = "Choice Given", 
+         y = "Δ VR Anxiety", 
+         color = "Choice Given") +
+    geom_boxplot() +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+# ONLY Δ VR Anxiety vs. Environment
+env_plot = ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
+    labs(x = "VR Environment", 
+         y = "Δ VR Anxiety", 
+ 	 fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+
+ggplotly(choice_plot)
+ggplotly(env_plot)
+```
 :::
 
-Our analysis found that there was little to no relationship between either the ability to choose or the VR environment to the level of anxiety change. However, it is notable that the range for change in anxiety for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation in the dataset and thus there is a low chance to be an underlying mechanism for this phenomenon. There also appears to be little correlation between age and anxiety.
+Our analysis found that there was little to no relationship between either the ability to choose *or* the VR environment to the change in level of anxiety (henceforth, change will be denoted by $\Delta$). However, it is notable that the range of $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$ for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation in the dataset and thus there is a low chance to be an underlying mechanism for this phenomenon. This is more likely to be a result of natural variation in the dataset though; there is unlikely to be an underlying mechanism for these results.
 
-Our analysis within this report found that there was no relationship between either the ability to choose or the VR environment to the level of anxiety change. However, it is notable that the range for change in anxiety for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is more likely to be a result of natural variation in the dataset though; there is unlikely to be an underlying mechanism for these results.
+A more detailed look at the data finds that the mean in participants who were given the ability to choose was `r mean(filter(data, data$choice == "Choice")$vranxiety) # ≈ 2.096` compared to `r mean(filter(data, data$choice == "No Choice")$vranxiety) # ≈ 1.955446` for those who did not. As there is only a slight difference, we demonstrate that choice has little to no bearing on the amount of anxiety a person gains/releases with regards to an activity that may cause distress or other side effects such as cybersickness.
 
-\<\<\<\<\<\<\< Updated upstream A more detailed look at the data finds that the mean change in anxiety in participants who were given the ability to choose was `r mean(filter(data, data$choice == "Choice")$vranxiety) # ≈ 2.096` compared to `r mean(filter(data, data$choice == "No Choice")$vranxiety) # ≈ 1.955446` for those who did not. As there is only a slight difference, we demonstrate that choice has little to no bearing on the amount of anxiety a person experiences with regards to an activity that may cause distress or other side effects such as cybersickness.
+```{r}
+#| label: bvra-pvra
+vranxiety_cor = cor(data$PVRA, data$BVRA)
 
-Our analysis within this report found that typically no correlation between different environments and change in anxiety. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
+bvra_pvra_plot = ggplot(data, aes(x = BVRA, y = PVRA)) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    geom_abline(intercept = 0, slope = 1) +
+    labs(title = "Active VR Anxiety Rating vs. Baseline VR Anxiety Rating",
+         subtitle = paste("r =", vranxiety_cor),
+         x = "Baseline VR Anxiety Rating",
+         y = "Active VR Anxiety Rating")
+
+ggplotly(bvra_pvra_plot) %>%
+    layout(title = list(text = paste("Active VR Anxiety Rating vs. Baseline VR Anxiety Rating",
+                                    "<br><sup>",
+                                    paste("r =", vranxiety_cor),
+                                    "</sup>")))
+```
+
+```{r}
+#| label: bstai-pstai
+
+stai_cor = cor(data$p_stai, data$baseline_stai)
+
+bstai_pstai_plot = ggplot(data, aes(x = baseline_stai, y = p_stai)) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    geom_abline(intercept = 0, slope = 1) +
+    labs(title = "Active State Anxiety Rating vs. Baseline State Anxiety Rating",
+         subtitle = paste("r =", stai_cor),
+         x = "Baseline STAI-6 Sum Score",
+         y = "Active STAI-6 Sum Score")
+
+ggplotly(bstai_pstai_plot) %>%
+    layout(title = list(text = paste("Active State Anxiety Rating vs. Baseline State Anxiety Rating",
+                                    "<br><sup>",
+                                    paste("r =", stai_cor),
+                                    "</sup>")))
+```
+
+A broader understanding of the data shows that for the participants—people with little to no experience with VR—, the activity typically increased both their VR related anxiety and general (state) anxiety levels[^1] alike; the majority of people have both positive $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$. Interestingly, the linear model of initial to active anxiety levels shows that people who reported lower initial scores often had the largest $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$ numbers. Conversely, people who reported higher initial generally had smaller increases (indicated by the convergence of the modelled line and the line $y = x$ indicating $\Delta = 0$). From this, it is worth considering how ignorance/ambivalence about the activity (despite priming via the viewing of the confederate) may contribute to elevated anxiety levels afterwards.
+
+[^1]: See Appendix for graphs
+
+The results found in this data analysis and other literature suggest that reducing anxiety through empowerment via decision is not the correct approach. As a physiological response to both tangible and foreseen negative stimuli, more effective approaches against anxiety have been proposed, like by dispelling untrue notions (Huff, 2025). In this case, an informative explanation of the activity would be more useful in reducing anxiety (Grupe & Nitschke, 2013). Furthermore, it may be detrimental to indulge in choice making which encourages symptomatic behaviours, especially as it has been shown that decision making is hampered under anxiety (Engelmann et al., 2015).
 
 ## Conclusion
 
-There is a negligible influence on change in anxiety levels due to the VR environment, as the average change in anxiety levels of different environments are very similar. It is notable that anxiety in general increased for all participants, however it is likely to be explained by the nature of the environment; A rollercoaster is likely to produce feelings of sickness and therefore anxiety. Although factors apart from environment, and choice might have played a larger role in the resultant anxiety level due to the relatively low change found in the respective variables (Kwon, 2020). This also does not take into account one's perception of the reality of the environment, as a more accurate recreation would increase anxiety (Matteo Girondini et al., 2023). We came to a consensus that our findings reflect that there is likely little to no relation between choice nor environment and anxiety.
+The ability to choose does not have any noticeable affect on the level of anxiety experienced in anticipation of a negative experience. When comparing the results of $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$, there is no statistically significant difference between participants given the ability to choose the VR environment experience and participants assigned a VR environment. Our analysis finds that overall, there is a general increase in anxiety, both state and VR related, after the experience, and that a positive change is more pronounced in participants who felt less anxiety beforehand. This, along existing literature, indicates that empowerment through information lessens anxiety. This finding aligns with the notion that anxiety is a physiological response to negative stimuli, both perceived and tangible.
 
 ## Professional Standard of Report
 
 Throughout the report every member maintained respect for each others privacy, and confidentiality along with professionalism, letting each other do their own dedicated work towards our data story. Additionally, ethical principles were obeyed, with truthfulness and integrity of our work progress, keeping everyone accountable for their own actions.
+
+------------------------------------------------------------------------
+
+## Appendix
+
+```{r}
+#| label: ce-stai-age
+#| code-fold: true
+ce_stai_age_plot = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) + 
+    geom_boxplot() + 
+    labs(title = "Δ State Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
+         x = "Choice Given & VR Environment",
+         y = "Δ STAI-6 Sum Score",
+         color = "Choice Given",
+         fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3")) +
+    transition_states(ageset, transition_length = 1, state_length = 5, wrap = FALSE) +
+    enter_fade() + 
+    exit_shrink() + 
+    ease_aes('exponential-in-out')
+
+animate(ce_stai_age_plot, renderer = gifski_renderer(), duration=20)
+```
+
+```{r}
+#| label: ce-stai-noage
+#| code-fold: true
+ce_stai_noage = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
+    geom_boxplot() +
+    labs(title = "Δ State Anxiety Level vs. Choice & Environment",
+         x = "Choice Given & VR Environment",
+         y = "Δ STAI-6 Sum Score",
+         color = "Choice Given",
+         fill = "VR Environment") +
+    scale_fill_manual(values=c("lightblue", "orange")) +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplotly(ce_stai_noage)
+```
+
+```{r}
+#| label: separate-ce-stai
+#| code-fold: true
+
+# Δ State Anxiety Level vs. ONLY Choice
+choice_plot = ggplot(data, aes(x = choice, y = stai, color = choice)) +
+    labs(
+        title = "Δ State Anxiety Level vs. Choice Given",
+        x = "Choice Given",
+        y = "Δ STAI Level",
+        color = "Choice Given") +
+    geom_boxplot() +
+    scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+# ONLY Δ State Anxiety Level vs. VR Environment
+env_plot = ggplot(data, aes(x = env, y = stai, fill = env)) +
+    labs(
+        title = "Δ State Anxiety Level vs. VR Environment",
+        x = "VR Environment",
+        y = "Δ STAI Level",
+        fill = "VR Environment") +
+    geom_boxplot() +
+    scale_fill_manual(values=c("lightblue", "orange"))
+
+ggplotly(choice_plot)
+ggplotly(env_plot)
+```
+
+```{r}
+#| label: bvra-pvra-resid
+#| code-fold: true
+vranxiety_model = lm(PVRA ~ BVRA, data = data)
+
+# Appendix A: Residual Plot
+bvra_pvra_resid_plot = ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0) +
+    labs(title = "PVRA vs. BVRA Residual Plot",
+         x = "Predicted Values",
+         y = "Error")
+
+ggplotly(bvra_pvra_resid_plot)
+```
+
+```{r}
+#| label: bstai-pstai-resid
+#| code-fold: true
+stai_model = lm(p_stai ~ baseline_stai, data = data)
+
+# Appendix B: Residual Plot
+bstai_pstai_resid_plot = ggplot(stai_model, aes(x = .fitted, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0) +
+    labs(title = "P-STAI-6 Sum Score vs. B-STAI-6 Sum Score Residual Plot",
+         x = "Predicted Values",
+         y = "Error")
+
+ggplotly(bstai_pstai_resid_plot)
+```
 
 ------------------------------------------------------------------------
 

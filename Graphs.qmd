@@ -18,6 +18,7 @@ library(readxl)
 library(gganimate)
 library(gifski)
 library(dplyr)
+library(plotly)
 
 # Define age groups
 agegroup = Vectorize(function(number) {
@@ -53,7 +54,7 @@ data$choice_and_env = paste(data$choice, "-", data$env)
 
 ```{r}
 #| label: ce-vranx-noage
-ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
+ce_vranx_noage_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Change in Anxiety Level vs. Choice & Environment",
          x = "Choice Given & VR Environment",
@@ -62,6 +63,8 @@ ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env))
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
     scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplotly(ce_vranx_noage_plot)
 ```
 
 ##### Δ VR Anxiety vs. Choice & Environment, Separation by Age Ranges
@@ -107,7 +110,8 @@ env_plot = ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
     geom_boxplot() +
     scale_fill_manual(values=c("lightblue", "orange"))
 
-plot_grid(choice_plot, env_plot)
+ggplotly(choice_plot)
+ggplotly(env_plot)
 ```
 
 ### Baseline and Active VR Anxiety
@@ -118,34 +122,38 @@ This graph allows us to predict VR anxiety after the VR experience from self-rep
 
 ```{r}
 #| label: bvra-pvra
-ggplot(data, aes(x = BVRA, y = PVRA)) +
+#| code-fold: true
+vranxiety_cor = cor(data$PVRA, data$BVRA)
+
+bvra_pvra_plot = ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
     geom_smooth(method = "lm") +
+    geom_abline(intercept = 0, slope = 1) +
     labs(title = "Active VR Anxiety Rating vs. Baseline VR Anxiety Rating",
+         subtitle = paste("r =", vranxiety_cor),
          x = "Baseline VR Anxiety Rating",
          y = "Active VR Anxiety Rating")
+
+ggplotly(bvra_pvra_plot) %>%
+    layout(title = list(text = paste("Active VR Anxiety Rating vs. Baseline VR Anxiety Rating",
+                                    "<br><sup>",
+                                    paste("r =", vranxiety_cor),
+                                    "</sup>")))
 ```
 
 ```{r}
 #| label: bvra-pvra-resid
 vranxiety_model = lm(PVRA ~ BVRA, data = data)
-vranxiety_cor = cor(data$PVRA, data$BVRA)
-
-ggplot(data, aes(x = BVRA, y = PVRA)) +
-    geom_point() +
-    geom_smooth(method = "lm") +
-    labs(x = "Baseline VR Anxiety Rating",
-         y = "Active VR Anxiety Rating") +
-    ggtitle("Active VR Anxiety Rating vs. Baseline VR Anxiety Rating", 
-            subtitle = paste("r =", vranxiety_cor))
 
 # Appendix A: Residual Plot
-ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
+bvra_pvra_resid_plot = ggplot(vranxiety_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0) +
     labs(title = "PVRA vs. BVRA Residual Plot",
          x = "Predicted Values",
          y = "Error")
+
+ggplotly(bvra_pvra_resid_plot)
 ```
 
 ## State Anxiety Level
@@ -158,7 +166,8 @@ This graph allows us to predict how **general** anxiety *changes* based on Choic
 
 ```{r}
 #| label: ce-stai-noage
-ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
+#| code-fold: true
+ce_stai_noage = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
     geom_boxplot() +
     labs(title = "Δ State Anxiety Level vs. Choice & Environment",
          x = "Choice Given & VR Environment",
@@ -167,6 +176,8 @@ ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
     scale_colour_manual(values=c("chartreuse4", "brown3"))
+
+ggplotly(ce_stai_noage)
 ```
 
 #### Δ State Anxiety Level vs. Choice & Environment, Separation by Age Ranges
@@ -217,7 +228,8 @@ env_plot = ggplot(data, aes(x = env, y = stai, fill = env)) +
     geom_boxplot() +
     scale_fill_manual(values=c("lightblue", "orange"))
 
-plot_grid(choice_plot, env_plot)
+ggplotly(choice_plot)
+ggplotly(env_plot)
 ```
 
 ### Active State Anxiety Rating vs. Baseline State Anxiety Rating
@@ -226,32 +238,37 @@ This graph allows us to predict **general** anxiety after the VR experience from
 
 ```{r}
 #| label: bstai-pstai
-ggplot(data, aes(x = baseline_stai, y = p_stai)) +
+#| code-fold: true
+
+stai_cor = cor(data$p_stai, data$baseline_stai)
+
+bstai_pstai_plot = ggplot(data, aes(x = baseline_stai, y = p_stai)) +
     geom_point() +
     geom_smooth(method = "lm") +
+    geom_abline(intercept = 0, slope = 1) +
     labs(title = "Active State Anxiety Rating vs. Baseline State Anxiety Rating",
+         subtitle = paste("r =", stai_cor),
          x = "Baseline STAI-6 Sum Score",
          y = "Active STAI-6 Sum Score")
+
+ggplotly(bstai_pstai_plot) %>%
+    layout(title = list(text = paste("Active State Anxiety Rating vs. Baseline State Anxiety Rating",
+                                    "<br><sup>",
+                                    paste("r =", stai_cor),
+                                    "</sup>")))
 ```
 
 ```{r}
 #| label: bstai-pstai-resid
 stai_model = lm(p_stai ~ baseline_stai, data = data)
-stai_cor = cor(data$p_stai, data$baseline_stai)
-
-ggplot(data, aes(x = baseline_stai, y = p_stai)) +
-    geom_point() +
-    geom_smooth(method = "lm") +
-    labs(x = "Baseline STAI-6 Sum Score",
-         y = "Active STAI-6 Sum Score") +
-    ggtitle("Active State Anxiety Rating vs. Baseline State Anxiety Rating", 
-             subtitle = paste("r =", stai_cor))
 
 # Appendix B: Residual Plot
-ggplot(stai_model, aes(x = .fitted, y = .resid)) +
+bstai_pstai_resid_plot = ggplot(stai_model, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0) +
     labs(title = "P-STAI-6 Sum Score vs. B-STAI-6 Sum Score Residual Plot",
          x = "Predicted Values",
          y = "Error")
+
+ggplotly(bstai_pstai_resid_plot)
 ```
