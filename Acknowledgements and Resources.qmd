@@ -1,4 +1,4 @@
-## Acknowledgements
+### Acknowledgements
 
 - GitHub was utilized for easy project management
 

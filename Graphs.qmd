@@ -47,6 +47,7 @@ data$choice_and_env = paste(data$choice, "-", data$env)
 
 ```{r}
 #| label: ce-vranx-noage
+#| code-fold: true
 ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Choice & Environment vs. Change in Anxiety Level by Age Ranges {closest_state}",
@@ -62,6 +63,8 @@ ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env))
 
 ```{r}
 #| label: ce-vranx-age
+#| code-fold: true
+
 ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Change in Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
@@ -83,6 +86,7 @@ animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 20)
 
 ```{r}
 #| label: separate-ce-vranx
+#| code-fold: true
 
 # ONLY Δ VR Anxiety vs. Choice
 choice_plot = ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
@@ -107,6 +111,7 @@ This graph allows us to predict VR anxiety after the VR experience from self-rep
 
 ```{r}
 #| label: bvra-pvra
+#| code-fold: true
 ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
     geom_smooth(method = "lm") +
@@ -117,6 +122,7 @@ ggplot(data, aes(x = BVRA, y = PVRA)) +
 
 ```{r}
 #| label: bvra-pvra-resid
+#| code-fold: true
 vranxiety_model = lm(PVRA ~ BVRA, data = data)
 vranxiety_cor = cor(data$PVRA, data$BVRA)
 
@@ -147,6 +153,7 @@ This graph allows us to predict how **general** anxiety *changes* based on Choic
 
 ```{r}
 #| label: ce-stai-noage
+#| code-fold: true
 ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
     geom_boxplot() +
     labs(title = "Choice & Environment vs. Δ State Anxiety Level",
@@ -164,6 +171,7 @@ This graph allows us to predict how **general** anxiety *changes* based on Choic
 
 ```{r}
 #| label: ce-stai-age
+#| code-fold: true
 ce_stai_age_plot = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Δ State Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
@@ -185,6 +193,7 @@ animate(ce_stai_age_plot, renderer = gifski_renderer(), duration=20)
 
 ```{r}
 #| label: separate-ce-stai
+#| code-fold: true
 
 # Δ State Anxiety Level vs. ONLY Choice
 choice_plot = ggplot(data, aes(x = choice, y = stai, color = choice)) +
@@ -215,6 +224,7 @@ This graph allows us to predict **general** anxiety after the VR experience from
 
 ```{r}
 #| label: bstai-pstai
+#| code-fold: true
 ggplot(data, aes(x = baseline_stai, y = p_stai)) +
     geom_point() +
     geom_smooth(method = "lm") +
@@ -226,6 +236,7 @@ ggplot(data, aes(x = baseline_stai, y = p_stai)) +
 
 ```{r}
 #| label: bstai-pstai-resid
+#| code-fold: true
 stai_model = lm(p_stai ~ baseline_stai, data = data)
 stai_cor = cor(data$p_stai, data$baseline_stai)
 
