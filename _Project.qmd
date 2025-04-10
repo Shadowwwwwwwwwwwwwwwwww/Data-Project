@@ -7,41 +7,6 @@ format:
 editor: visual
 ---
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
-
-library(tidyverse)
-library(readxl)
-library(gganimate)
-library(gifski)
-library(dplyr)
-
-# Define age groups
-agegroup = Vectorize(function(number) {
-	if (number >= 17 & number <= 20) {
-		return ("17-20")
-	} else if (number >= 21 & number <= 25) {
-		return ("21-25")
-	} else if (number >= 26 & number <= 30) {
-		return ("26-30")
-	} else if (number >= 31 & number <= 35) {
-		return ("31-35")
-	} else if (number >= 36 & number <= 40) {
-		return ("36-40")
-	} else {
-		return ("41+")
-    }
-})
-
-# Import data
-data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
-    mutate(choice = recode(choice, CHOICE = "Choice", NO_CHOICE = "No Choice")) |> 
-    mutate(ageset = agegroup(age)) |> 
-    filter(ageset != "41+")
-# Combine choice and environment as single variable
-data$choice_and_env = paste(data$choice, "-", data$env)
-```
-
 ## Abstract
 
 Being able to mitigate anxiety associated with any given activity is always a desirable outcome. Considering the frequency of anticipatory anxiety in daily life, it is worth investigating whether the ability to choose—and thus exert some level of control—can reduce detrimental emotional responses. The analysis in this report finds that choice does not play a significant role in managing or reducing the effects of anxiety that precedes an activity with perceived displeasure.
@@ -57,59 +22,28 @@ This dataset and analysis is only somewhat limited by the sample size, along wit
 ## Analysis
 
 ::: panel-tabset
-## Choice & Environment vs. Δ VR Anxiety Separated by Age Ranges
+## Choice & Environment vs. Δ VR Anxiety, Separation by Age Ranges
 
-```{r}
-# Choice & Environment vs. Δ VR Anxiety separated by age ranges
-ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
-    geom_boxplot() + 
-    labs(title = "Choice & Environment vs. Change in Anxiety Level by Age Ranges {closest_state}",
-        x = "Choice Given & VR Environment",
-        y = "Δ VR Anxiety Level",
-        color = "Choice Given",
-        fill = "VR Environment") +
-    scale_fill_manual(values=c("lightblue", "orange")) +
-    scale_colour_manual(values=c("chartreuse4", "brown3")) +
-    transition_states(ageset, transition_length = 1, state_length = 1, wrap = TRUE) +
-    enter_fade() + 
-    exit_shrink() + 
-    ease_aes('exponential-in-out')
+{{< embed Graphs.qmd#ce-vranx-age >}}
 
-animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 15)
-```
+## Choice & Environment vs. Δ VR Anxiety, No Separation by Age Ranges
 
-## Choice & Environment vs. Δ VR Anxiety
-
-```{r}
-# Choice & Environment vs. Δ VR Anxiety separated **NO AGE RANGES**
-ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
-    geom_boxplot() + 
-    labs(title = "Choice & Environment vs. Change in Anxiety Level by Age Ranges {closest_state}",
-        x = "Choice Given & VR Environment",
-        y = "Δ VR Anxiety Level",
-        color = "Choice Given",
-        fill = "VR Environment") +
-    scale_fill_manual(values=c("lightblue", "orange")) +
-    scale_colour_manual(values=c("chartreuse4", "brown3"))
-```
+{{< embed Graphs.qmd#ce-vranx-noage >}}
 
 ## Choice Only and Environment Only
 
-```{r}
-# ONLY Choice vs. Δ VR Anxiety
-ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
-    labs(x = "Choice Given", y="Δ VR Anxiety", color = "Choice Given") +
-    geom_boxplot() +
-    scale_colour_manual(values=c("chartreuse4", "brown3"))
-
-# ONLY Environment vs. Δ VR Anxiety
-ggplot(data, aes(x = env, y = vranxiety, fill = env)) +
-    labs(x = "VR Environment", y="Δ VR Anxiety", fill = "VR Environment") +
-    geom_boxplot() +
-    scale_fill_manual(values=c("lightblue", "orange"))
-```
-
+{{< embed Graphs.qmd#separate-ce-vranx >}}
 :::
+
+-   Choice does not affect level of anxiety
+-   Environment does not
+
+
+
+Our analysis within this report found that there was no relationship between either the ability to choose or the VR environment to the level of anxiety change. However, it is notable that the range for change in anxiety for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is more likely to be a result of natural variation in the dataset though; there is unlikely to be an underlying mechanism for these results.
+
+A more detailed look at the data finds that the mean change in anxiety in participants who were given the ability to choose was 2.096 compared to 1.955 for those who did not. This demonstrates that choice has no bearing on easing the amount of anxiety a person experiences with regards to a daunting activity that may cause side effects like cybersickness.
+
 
 Our analysis within this report found that typically no anxiety change relationship could be found between environments. Although, notably the range for change in anxiety for those with a sunny environment was much greater than those with a snowy environment, indicating a small correlation. Moreover, the analysis conveyed that the spreads of the data decreased for both environments when given the choice to choose. As such the environment the user experiences has little association with the change in anxiety, although when given a choice a more decisive result may occur although the data is not strong enough to confirm this.
 

@@ -6,6 +6,10 @@
 
 -   https://quarto.org/docs/authoring/includes.html
 
+-   https://rstudio.github.io/cheatsheets/html/rmarkdown.html#embed-code-with-knitr
+
+-   https://quarto.org/docs/authoring/notebook-embed.html
+
 -   <https://stackoverflow.com/questions/65189127/how-to-hide-import-messages-when-importing-a-library>
 
 -   dataset provided
