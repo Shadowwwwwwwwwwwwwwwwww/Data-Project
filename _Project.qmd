@@ -19,11 +19,9 @@ editor: visual
 ```{r}
 #| label: setup
 library(tidyverse)
-library(cowplot)
 library(readxl)
 library(gganimate)
 library(gifski)
-library(dplyr)
 library(plotly)
 
 # Define age groups
@@ -64,7 +62,7 @@ Mitigating anticipatory anxiety is always a desirable outcome. Considering the f
 
 -   This investigation has a unique focus on anxiety. Variables of Choice, VR Environment, VR Anxiety (Level), Baseline/Active/Delta Anxiety, and Age were all considered.
 
-    -   Age was reclassified from quantitative continuous to qualitative nominal.
+    -   Age was reclassified from quantitative continuous to qualitative nominal to lessen impact of uneven sample size.
 
 -   A new variable of a combination of Choice and VR Environment was created to aide in grpahing.
 
@@ -366,7 +364,6 @@ ggplotly(env_plot)
 
 ```{r}
 #| label: bvra-pvra-resid
-#| code-fold: true
 vranxiety_model = lm(PVRA ~ BVRA, data = data)
 
 # Appendix A: Residual Plot
@@ -382,7 +379,6 @@ ggplotly(bvra_pvra_resid_plot)
 
 ```{r}
 #| label: bstai-pstai-resid
-#| code-fold: true
 stai_model = lm(p_stai ~ baseline_stai, data = data)
 
 # Appendix B: Residual Plot
