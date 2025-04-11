@@ -64,7 +64,7 @@ Mitigating anticipatory anxiety is always a desirable outcome. Considering the f
 
     -   Age was reclassified from quantitative continuous to qualitative nominal to lessen impact of uneven sample size.
 
--   A new variable of a combination of Choice and VR Environment was created to aide in grpahing.
+-   A new variable of a combination of Choice and VR Environment was created to aide in graphing.
 
 -   This dataset and analysis is only somewhat limited by the sample size. We assume the three separate runs of the experiment were methodologically consistent across the pooled dataset.
 
