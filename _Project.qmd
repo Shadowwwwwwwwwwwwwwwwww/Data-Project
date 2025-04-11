@@ -23,6 +23,7 @@ library(gganimate)
 library(gifski)
 library(dplyr)
 library(plotly)
+library(ggplot2)
 
 # Define age groups
 agegroup = Vectorize(function(number) {
@@ -128,7 +129,7 @@ ggplotly(g)
 
 Our analysis within this report found that there was no relationship between either the ability to choose or the VR environment to the level of anxiety change. However, it is notable that the range for change in anxiety for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is more likely to be a result of natural variation in the dataset though; there is unlikely to be an underlying mechanism for these results.
 
-The data conveyed that the change in anxiety levels between users of sunny, and snowy environments varied by minuscule amounts. This was concluded because the median change among all age groups for sunny environments was 1.75, while snowy was 2, revealing that snowy environments had a slightly higher change. Furthermore, the average range of IQR was 4 for sunny environments, and 2.625 for snowy, implying that the IQR change was a resultant of a more decisive change.
+The data conveyed that the change in anxiety levels between users of sunny, and snowy environments varied by minuscule amounts. This was concluded because the median change among all age groups for both environments was the same, while the mean for snowy was slightly higher revealing that snowy environments had a slightly higher change. Furthermore, the average range of IQR was 3 for sunny environments, and 4 for snowy, implying that the IQR change was a resultant of a more decisive change.
 
 A more detailed look at the data finds that the mean change in anxiety in participants who were given the ability to choose was 2.096 compared to 1.955 for those who did not. This demonstrates that choice has no bearing on easing the amount of anxiety a person experiences with regards to a daunting activity that may cause side effects like cyber sickness. Whereas the average range of IQR for those who chose was 3, whereas it was 4 for those who did not get to choose.
 
