@@ -77,16 +77,16 @@ Mitigating anticipatory anxiety is always a desirable outcome. Considering the f
 # Analysis
 
 ::: panel-tabset
-## Choice & Environment vs. Δ VR Anxiety, Separation by Age Ranges
+## Δ VR Anxiety vs. Choice & Environment, Separation by Age Ranges
 
 ```{r}
 #| label: ce-vranx-age
 
 ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
-    labs(title = "Change in Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
+    labs(title = "Δ VR Anxiety vs. Choice & Environment by Age Ranges {closest_state}",
          x = "Choice Given & VR Environment",
-         y = "Δ VR Anxiety Level",
+         y = "Δ VR Anxiety",
          color = "Choice Given",
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
@@ -99,15 +99,15 @@ ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = 
 animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 20)
 ```
 
-## Choice & Environment vs. Δ VR Anxiety, No Separation by Age Ranges
+## Δ VR Anxiety vs. Choice & Environment, No Separation by Age Ranges
 
 ```{r}
 #| label: ce-vranx-noage
 ce_vranx_noage_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
-    labs(title = "Change in Anxiety Level vs. Choice & Environment",
+    labs(title = "Δ VR Anxiety vs. Choice & Environment",
          x = "Choice Given & VR Environment",
-         y = "Δ VR Anxiety Level",
+         y = "Δ VR Anxiety",
          color = "Choice Given",
          fill = "VR Environment") +
     scale_fill_manual(values=c("lightblue", "orange")) +
@@ -154,7 +154,7 @@ bvra_pvra_plot = ggplot(data, aes(x = BVRA, y = PVRA)) +
     geom_point() +
     geom_smooth(method = "lm") +
     geom_abline(intercept = 0, slope = 1) +
-    labs(title = "Active VR Anxiety Rating vs. Baseline VR Anxiety Rating",
+    labs(title = "Baseline VR Anxiety Rating vs. Active VR Anxiety Rating",
          subtitle = paste("r =", vranxiety_cor),
          x = "Baseline VR Anxiety Rating",
          y = "Active VR Anxiety Rating")
