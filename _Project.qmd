@@ -142,9 +142,9 @@ ggplotly(env_plot)
 ```
 :::
 
-Our analysis found that there was little to no relationship between either the ability to choose *nor* the VR environment to the change in level of anxiety (henceforth, change will be denoted by $\Delta$). However, it is notable that the range of $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$ for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation in the dataset and thus there is a low chance to be an underlying mechanism for this phenomenon.
+Our analysis found that there was little relationship between the ability to choose *nor* the VR environment to the change in level of anxiety (henceforth, change will be denoted by $\Delta$). However, it is notable that the range of $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$ for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation with a low chance for an underlying mechanism for this phenomenon.
 
-A more detailed look at the data finds that the mean in participants who were given the ability to choose was `r mean(filter(data, data$choice == "Choice")$vranxiety) # ≈ 2.096` compared to `r mean(filter(data, data$choice == "No Choice")$vranxiety) # ≈ 1.955446` for those who did not. As there is only a slight difference, we demonstrate that choice has little to no bearing on the amount of anxiety a person gains/releases with regards to an activity that may cause distress or other side effects such as cybersickness.
+The data finds that the mean in participants who were given the ability to choose was `r mean(filter(data, data$choice == "Choice")$vranxiety) # ≈ 2.096` compared to `r mean(filter(data, data$choice == "No Choice")$vranxiety) # ≈ 1.955446` for those who did not. As there is only a slight difference, we demonstrate that choice has little to no bearing on the amount of anxiety a person gains/releases with regards to an activity that may cause distress or other side effects such as cybersickness.
 
 ```{r}
 #| label: bvra-pvra
@@ -187,11 +187,11 @@ ggplotly(bstai_pstai_plot) %>%
                                     "</sup>")))
 ```
 
-Further analysis shows that participants—ones with minimal VR experience—, typically had increases in both general (state) and VR related anxiety levels[^1] alike; the majority of people had both positive $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$. Interestingly, the linear model of initial to active anxiety levels shows that participants reporting lower initial scores often had the largest positive deltas. Conversely, people reporting higher initial scores generally had smaller increases, indicated by the modelled line converging with $y = x$. From this, it is worth considering how ignorance/ambivalence towards the activity (despite nocebo priming) may contribute to elevated anxiety levels afterwards.
+Further analysis shows that participants—ones with minimal VR experience—, typically had increases in both state and VR related anxiety levels[^1]; the majority of people had positive $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$ scores. Interestingly, the linear model of initial to active anxiety levels shows that participants reporting lower initial scores often had the largest positive deltas. Conversely, people reporting higher initial scores generally had smaller increases, indicated by the modelled line converging with $y = x$. It is worth considering how ignorance/ambivalence towards the activity (despite nocebo priming) may contribute to elevated anxiety levels afterwards.
 
 [^1]: See Appendix for graphs
 
-The findings and other literature suggest that reducing anxiety through enabling user agency is not the correct approach. As a physiological response to both tangible and foreseen negative stimuli, more effective approaches against anxiety have been proposed, like by dispelling untrue notions (Huff, 2025). In this case, an informative explanation of the activity would be more useful in reducing anxiety (Grupe & Nitschke, 2013). Furthermore, it may be detrimental to indulge in choice making which encourages symptomatic behaviours, especially as it has been shown that decision making is hampered under anxiety (Engelmann et al., 2015).
+This, and other literature, suggest that reducing anxiety through enabling user agency is not the correct approach. As a response to both tangible and foreseen events, more effective approaches have been proposed, like by dispelling untrue notions (Huff, 2025). In this case, informative explanations of the activity would be more useful in reducing anxiety (Grupe & Nitschke, 2013). Furthermore, it may be detrimental to indulge in choice-making which encourages symptomatic behaviours, especially as decision making is hampered under anxiety (Engelmann et al., 2015).
 
 # Conclusion
 
