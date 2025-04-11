@@ -16,8 +16,8 @@ execute:
 editor: visual
 ---
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+```{r}
+#| label: setup
 library(tidyverse)
 library(cowplot)
 library(readxl)
@@ -52,11 +52,11 @@ data = read_xlsx("all_data.xlsx", sheet = "pooled123") |>
 data$choice_and_env = paste(data$choice, "-", data$env)
 ```
 
-## Abstract
+# Abstract
 
 Mitigating anticipatory anxiety is always a desirable outcome. Considering the frequency of anxiety-inducing events in daily life, it is worth investigating whether decision making ability can reduce negative emotional responses. This report finds that choice has no significant role in managing anxiety that precedes activities with perceived displeasure.
 
-## Initial Data Analysis
+# Initial Data Analysis
 
 -   The data was sourced from an experimental survey examining 337 participants on choice and socially acquired nocebo effects in Virtual Reality (VR) (Saunders, 2023).
 
@@ -70,20 +70,19 @@ Mitigating anticipatory anxiety is always a desirable outcome. Considering the f
 
 -   This dataset and analysis is only somewhat limited by the sample size. We assume the three separate runs of the experiment were methodologically consistent across the pooled dataset.
 
--   Minor data cleaning was performed to exclude age groups outside 15-40 years old to be more representative of the targeted survey bloc.
+-   Minor data cleaning was performed to exclude age groups outside 16-40 years old to be more representative of the targeted survey bloc.
 
 -   The decision to turn age into a qualitative nominal variable was undertaken in order to remedy the inconsistent distribution of ages.
 
 -   Minor discrepancies in the dataset regarding variable names and descriptions were found. The definitions of `p_e` and `p_stai` were swapped in the data dictionary, verified by calculations.
 
-## Analysis
+# Analysis
 
 ::: panel-tabset
 ## Choice & Environment vs. Δ VR Anxiety, Separation by Age Ranges
 
 ```{r}
 #| label: ce-vranx-age
-#| code-fold: true
 
 ce_vranx_age_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
@@ -106,7 +105,6 @@ animate(ce_vranx_age_plot, renderer = gifski_renderer(), duration = 20)
 
 ```{r}
 #| label: ce-vranx-noage
-#| code-fold: true
 ce_vranx_noage_plot = ggplot(data, aes(x = choice_and_env, y = vranxiety, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Change in Anxiety Level vs. Choice & Environment",
@@ -124,7 +122,6 @@ ggplotly(ce_vranx_noage_plot)
 
 ```{r}
 #| label: separate-ce-vranx
-#| code-fold: true
 
 # ONLY Δ VR Anxiety vs. Choice
 choice_plot = ggplot(data, aes(x = choice, y = vranxiety, color = choice)) +
@@ -147,7 +144,7 @@ ggplotly(env_plot)
 ```
 :::
 
-Our analysis found that there was little to no relationship between either the ability to choose *or* the VR environment to the change in level of anxiety (henceforth, change will be denoted by $\Delta$). However, it is notable that the range of $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$ for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation in the dataset and thus there is a low chance to be an underlying mechanism for this phenomenon. This is more likely to be a result of natural variation in the dataset though; there is unlikely to be an underlying mechanism for these results.
+Our analysis found that there was little to no relationship between either the ability to choose *nor* the VR environment to the change in level of anxiety (henceforth, change will be denoted by $\Delta$). However, it is notable that the range of $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$ for those experiencing a sunny environment was somewhat greater than those with a snowy environment. This is likely to be a result of natural variation in the dataset and thus there is a low chance to be an underlying mechanism for this phenomenon.
 
 A more detailed look at the data finds that the mean in participants who were given the ability to choose was `r mean(filter(data, data$choice == "Choice")$vranxiety) # ≈ 2.096` compared to `r mean(filter(data, data$choice == "No Choice")$vranxiety) # ≈ 1.955446` for those who did not. As there is only a slight difference, we demonstrate that choice has little to no bearing on the amount of anxiety a person gains/releases with regards to an activity that may cause distress or other side effects such as cybersickness.
 
@@ -192,27 +189,122 @@ ggplotly(bstai_pstai_plot) %>%
                                     "</sup>")))
 ```
 
-A broader understanding of the data shows that for the participants—people with little to no experience with VR—, the activity typically increased both their VR related anxiety and general (state) anxiety levels[^1] alike; the majority of people have both positive $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$. Interestingly, the linear model of initial to active anxiety levels shows that people who reported lower initial scores often had the largest $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$ numbers. Conversely, people who reported higher initial generally had smaller increases (indicated by the convergence of the modelled line and the line $y = x$ indicating $\Delta = 0$). From this, it is worth considering how ignorance/ambivalence about the activity (despite priming via the viewing of the confederate) may contribute to elevated anxiety levels afterwards.
+A broader understanding of the data shows that for the participants—people with little to no experience with VR—, the activity typically increased both their VR related anxiety and general (state) anxiety levels[^1] alike; the majority of people have both positive $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$. Interestingly, the linear model of initial to active anxiety levels shows that people who reported lower initial scores often had the largest $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$ numbers. Conversely, people who reported higher initial generally had smaller increases or decreasing instead, indicated by the modelled line lowering past the line $y = x$ that indicates $\Delta = 0$. From this, it is worth considering how ignorance/ambivalence about the activity (despite priming via the viewing of the confederate) may contribute to elevated anxiety levels afterwards.
 
 [^1]: See Appendix for graphs
 
 The results found in this data analysis and other literature suggest that reducing anxiety through empowerment via decision is not the correct approach. As a physiological response to both tangible and foreseen negative stimuli, more effective approaches against anxiety have been proposed, like by dispelling untrue notions (Huff, 2025). In this case, an informative explanation of the activity would be more useful in reducing anxiety (Grupe & Nitschke, 2013). Furthermore, it may be detrimental to indulge in choice making which encourages symptomatic behaviours, especially as it has been shown that decision making is hampered under anxiety (Engelmann et al., 2015).
 
-## Conclusion
+# Conclusion
 
-The ability to choose does not have any noticeable affect on the level of anxiety experienced in anticipation of a negative experience. When comparing the results of $\Delta_{\mathrm{VR~anxiety}}$ and $\Delta_{\mathrm{state~anxiety}}$, there is no statistically significant difference between participants given the ability to choose the VR environment experience and participants assigned a VR environment. Our analysis finds that overall, there is a general increase in anxiety, both state and VR related, after the experience, and that a positive change is more pronounced in participants who felt less anxiety beforehand. This, along existing literature, indicates that empowerment through information lessens anxiety. This finding aligns with the notion that anxiety is a physiological response to negative stimuli, both perceived and tangible.
+The ability to choose does not have any noticeable affect on the level of anxiety experienced in anticipation of a negative experience. When comparing the results of $\Delta_{\mathrm{VR~Anxiety}}$ and $\Delta_{\mathrm{State~Anxiety}}$, there is no statistically significant difference between participants given the ability to choose the VR environment experience and participants assigned a VR environment. Our analysis finds that overall, there is a general increase in anxiety, both state and VR related, after the experience, and that feelings and symptoms of anxiety became pronounced in participants who felt less unease beforehand. This, along existing literature, indicates that empowerment through information lessens anxiety. This finding aligns with the notion that anxiety is a physiological response to negative stimuli, both perceived and tangible.
 
-## Professional Standard of Report
+# Professional Standard of Report
 
 Throughout the report every member maintained respect for each others privacy, and confidentiality along with professionalism, letting each other do their own dedicated work towards our data story. Additionally, ethical principles were obeyed, with truthfulness and integrity of our work progress, keeping everyone accountable for their own actions.
 
 ------------------------------------------------------------------------
 
-## Appendix
+# References & Acknowledgements
+
+## References
+
+Alex. (2020, December 7). How to hide import messages when importing a library? \[Forum post\]. Stack Overflow. https://stackoverflow.com/q/65189127
+
+Ben. (2020, December 7). Answer to ‘How to hide import messages when importing a library?’ \[Online post\]. Stack Overflow. https://stackoverflow.com/a/65189295
+
+Embedding from Other Documents. (n.d.). Quarto. Retrieved 10 April 2025, from https://quarto.org/docs/authoring/notebook-embed.html
+
+Engelmann, J. B., Meyer, F., Fehr, E., & Ruff, C. C. (2015). Anticipatory Anxiety Disrupts Neural Valuation during Risky Choice. The Journal of Neuroscience, 35(7), 3085–3099. https://doi.org/10.1523/JNEUROSCI.2880-14.2015
+
+Girondini, M., Stefanova, M., Pillan, M., & Gallace, A. (2023). The Effect of Previous Exposure on Virtual Reality Induced Public Speaking Anxiety: A Physiological and Behavioral Study. Cyberpsychology, Behavior, and Social Networking, 26(2), 127–133. https://doi.org/10.1089/cyber.2022.0121
+
+goollan. (2019, April 30). How do I keep my subtitles when I use ggplotly() \[Forum post\]. Stack Overflow. https://stackoverflow.com/q/55923256
+
+Grupe, D. W., & Nitschke, J. B. (2013). Uncertainty and Anticipation in Anxiety. Nature Reviews. Neuroscience, 14(7), 488–501. https://doi.org/10.1038/nrn3524
+
+Huff, C. (2025, January 16). Are you suffering from anticipatory anxiety? Here’s how to cope. Https://Www.Apa.Org. https://www.apa.org/monitor/2025/06/anticipatory-anxiety
+
+Includes. (n.d.). Quarto. Retrieved 10 April 2025, from https://quarto.org/docs/authoring/includes.html
+
+Kwon, C. (2020). The Effect of the Degree of Anxiety of Learners during the Use of VR on the Flow and Learning Effect. Applied Sciences, 10(14), Article 14. https://doi.org/10.3390/app10144932
+
+Salazar, M. (2020, April 17). Answer to ‘How do I keep my subtitles when I use ggplotly()’ \[Online post\]. Stack Overflow. https://stackoverflow.com/a/61277897
+
+Saunders, C., Colagiuri, B., & Barnes, K. (2023). Socially Acquired Nocebo Effects Generalize but Are Not Attenuated by Choice. Annals of Behavioral Medicine: A Publication of the Society of Behavioral Medicine, 57(12), 1069–1080. https://doi.org/10.1093/abm/kaad056
+
+## Acknowledgements
+
+This report did **NOT** employ the use of Artificial Intelligence (AI).
+
+## Meetings and Contributions
+
++------------------------+---------------------------------------------------------------------------------+------------------------+
+| Meeting Date           | Purpose                                                                         | People & Contributions |
++========================+=================================================================================+========================+
+| 2025/03/19 20:00-21:00 | -   Project planning                                                            | -   Harry              |
+|                        |                                                                                 |                        |
+|                        | -   Task delegation                                                             | -   August             |
+|                        |                                                                                 |                        |
+|                        | -   Setting up file sharing                                                     | -   Leo                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Blake              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Ari                |
++------------------------+---------------------------------------------------------------------------------+------------------------+
+| 2025/03/20 10:00-12:00 | -   Deliberated on our research question. Considered VR Anxiety and Environment | -   Harry              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   August             |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Leo                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Blake              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Ari                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Shaksham           |
++------------------------+---------------------------------------------------------------------------------+------------------------+
+| 2025/03/27 10:00-12:00 | -   Worked on our individual parts                                              | -   Harry              |
+|                        |                                                                                 |                        |
+|                        | -   Graph generation and discussion of what the graphs revealed                 | -   August             |
+|                        |                                                                                 |                        |
+|                        | -   Debugging and ensuring methodology/analysis was correct and error free      | -   Leo                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Blake              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Ari                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Shaksham           |
++------------------------+---------------------------------------------------------------------------------+------------------------+
+| 2025/03/28 20:00-21:00 | -   Project planning                                                            | -   Harry              |
+|                        |                                                                                 |                        |
+|                        | -   Discussion of data analysis                                                 | -   August             |
+|                        |                                                                                 |                        |
+|                        | -   Confirmation of progress                                                    | -   Leo                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Blake              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Ari                |
++------------------------+---------------------------------------------------------------------------------+------------------------+
+| 2025/04/03 10:00-12:00 | -   Worked on our individual parts                                              | -   Harry              |
+|                        |                                                                                 |                        |
+|                        | -   Progress check-in                                                           | -   August             |
+|                        |                                                                                 |                        |
+|                        | -   Confirmation of submission requirements                                     | -   Leo                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Blake              |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Ari                |
+|                        |                                                                                 |                        |
+|                        |                                                                                 | -   Shaksham           |
++------------------------+---------------------------------------------------------------------------------+------------------------+
+
+------------------------------------------------------------------------
+
+# Appendix
 
 ```{r}
 #| label: ce-stai-age
-#| code-fold: true
 ce_stai_age_plot = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) + 
     geom_boxplot() + 
     labs(title = "Δ State Anxiety Level vs. Choice & Environment by Age Ranges {closest_state}",
@@ -232,7 +324,6 @@ animate(ce_stai_age_plot, renderer = gifski_renderer(), duration=20)
 
 ```{r}
 #| label: ce-stai-noage
-#| code-fold: true
 ce_stai_noage = ggplot(data, aes(x = choice_and_env, y = stai, color = choice, fill = env)) +
     geom_boxplot() +
     labs(title = "Δ State Anxiety Level vs. Choice & Environment",
@@ -248,7 +339,6 @@ ggplotly(ce_stai_noage)
 
 ```{r}
 #| label: separate-ce-stai
-#| code-fold: true
 
 # Δ State Anxiety Level vs. ONLY Choice
 choice_plot = ggplot(data, aes(x = choice, y = stai, color = choice)) +
@@ -305,9 +395,3 @@ bstai_pstai_resid_plot = ggplot(stai_model, aes(x = .fitted, y = .resid)) +
 
 ggplotly(bstai_pstai_resid_plot)
 ```
-
-------------------------------------------------------------------------
-
-## References & Acknowledgements
-
-{{< include "Acknowledgements and Resources.qmd" >}}
